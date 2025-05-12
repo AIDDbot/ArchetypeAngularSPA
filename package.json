@@ -1,16 +1,17 @@
 {
-	"name": "archetype-node-cli",
+	"name": "archetype-angular-spa",
 	"version": "1.0.0",
-	"description": "Node CLI Archetype",
+	"description": "Angular SPA Archetype",
 	"scripts": {},
 	"keywords": [],
 	"author": {
 		"name": "Alberto Basalo",
+		"company": "AI code Academy",
+		"website": "https://aicode.academy",
 		"email": "albertobasalo@aicode.academy"
 	},
 	"license": "ISC",
 	"devDependencies": {
-		"@biomejs/biome": "^1.9.4",
-		"@types/node": "^22.15.3"
+		"prettier": "^3.5.3"
 	}
 }
