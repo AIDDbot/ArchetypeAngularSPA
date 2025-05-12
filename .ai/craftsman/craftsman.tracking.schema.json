@@ -3,7 +3,7 @@
 	"container": {
 		"id": "{{ container.id }}",
 		"slug": "{{ container | slug }}",
-		"folder": "/containers/{{ slug }}",
+		"folder": "/{{ slug }}",
 		"status": "{{: implemented | test-verified | test-failed }}"
 	},
 	"features": [

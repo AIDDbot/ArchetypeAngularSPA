@@ -1,7 +1,7 @@
 ---
 syntax: "[Template Syntax](/.ai/syntax.template.md)"
 feature: "The feature to be tested"
-folder: "/containers/{{ container.slug }}/docs/{{ feature.id }}/"
+folder: "/{{ container.slug }}/docs/{{ feature.id }}/"
 file: "{{ feature.slug }}.test.md"
 ---
 
@@ -9,16 +9,14 @@ file: "{{ feature.slug }}.test.md"
 
 ### Reference
 
-
-
 <!--
-  {{ containerFolder: /containers/{{container.slug}} }}
+  {{ containerFolder: /{{container.slug}} }}
   {{ folderRules: {{containerFolder}}/.ai/}}
   -->
 
 - [Feature Documentation](/docs/{{feature.slug}}.blueprint.md)
-- [Archetype Node CLI](/containers/{{container.slug}}/docs/{{container.archetype}}.archetype.md)
-- [Test Rules](/containers/{{container.slug}}/.ai/rules/test.rules.md)
+- [Archetype Node CLI](/{{container.slug}}/docs/{{container.archetype}}.archetype.md)
+- [Test Rules](/{{container.slug}}/.ai/rules/test.rules.md)
 
 <!--
   Read this documents to understand the feature requirements and the container rules.
@@ -35,4 +33,4 @@ You are to generate a comprehensive set of tests for the {{ feature.id }} {{ fea
 - Then write the tests for the feature.
 - Use the test rules to refactor the tests as needed.
 
-> End of prompt for {{ feature.id }} {{ feature.name }} tests. 
+> End of prompt for {{ feature.id }} {{ feature.name }} tests.
