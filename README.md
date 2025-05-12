@@ -10,4 +10,7 @@ Repository: [AI code Academy / archetype angular spa](https://github.com/AIcodeA
 
 - **Author**: [Alberto Basalo](https://albertobasalo.dev)
 - **Company**: [AI code Academy](https://aicode.academy)
-- **Repository**: [ArchetypeAngularSPA](https://github.com/AIcodeAcademy/ArchetypeAngularSPA)
+- **Socials**:
+  - [X](https://x.com/albertobasalo)
+  - [LinkedIn](https://www.linkedin.com/in/albertobasalo/)
+  - [GitHub](https://github.com/albertobasalo)
