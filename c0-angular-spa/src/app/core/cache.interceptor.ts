@@ -8,11 +8,13 @@ import { LogService } from '../shared/log.service';
 export const cacheInterceptor: HttpInterceptorFn = (req, next) => {
   const cache = inject(CacheService);
   const log = inject(LogService);
+
   const cachedResponse = cache.get(req.url);
   if (cachedResponse) {
     log.info(`Cache hit for ${req.url}`);
     return of(cachedResponse as HttpResponse<unknown>);
   }
+  
   return next(req).pipe(
     filter((event) => event instanceof HttpResponse),
     tap((event) => {

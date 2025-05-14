@@ -1,14 +1,16 @@
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
+import { RouterLink } from "@angular/router";
+import { APP } from "./app-token";
 import { ThemeToggleComponent } from "./theme-toggle.component";
 
 @Component({
   selector: "app-header",
-  imports: [ThemeToggleComponent],
+  imports: [ThemeToggleComponent, RouterLink],
   template: `
     <header>
       <nav>
         <ul>
-          <li><strong>Acme Corp</strong></li>
+          <li ><a routerLink="/"><strong>{{ app.name }}</strong></a></li>
         </ul>
         <ul>
           <li><a href="#">User</a></li>
@@ -21,4 +23,6 @@ import { ThemeToggleComponent } from "./theme-toggle.component";
   `,
   styles: ``,
 })
-export class HeaderComponent {}
+export class HeaderComponent {
+  protected app = inject(APP);
+}

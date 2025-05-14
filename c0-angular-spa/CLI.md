@@ -7,3 +7,10 @@ ng g c shared/page
 
 ng g s routes/home/home.store 
 ng g interceptor core/cache 
+
+ng g s shared/cache
+
+ng g c core/ThemeToggle
+
+ng g environments
++ c0-angular-spa\src\app\core\app-token.ts

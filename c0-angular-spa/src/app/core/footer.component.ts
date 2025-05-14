@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { APP } from './app-token';
 
 @Component({
   selector: 'app-footer',
@@ -6,12 +7,13 @@ import { Component } from '@angular/core';
   template: `
     <footer>
       <small>
-        &copy; 2025 Acme Corp. All rights reserved.
+        &copy; {{ year }} by {{ app.author }}. All rights reserved.
       </small>
     </footer>
   `,
   styles: ``,
 })
 export class FooterComponent {
-
+  protected app = inject(APP);
+  protected year = new Date().getFullYear();
 }
