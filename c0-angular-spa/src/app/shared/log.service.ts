@@ -5,6 +5,10 @@ import { Injectable } from '@angular/core';
 })
 export class LogService {
 
+// ToDo: use app token to add app name to the log
+// ToDo: add timestamp to the log
+// ToDo: add emoji based on log level
+
   public info(message: string) {
     console.log(message);
   }
