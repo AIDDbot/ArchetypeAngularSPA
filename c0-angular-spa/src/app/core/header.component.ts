@@ -1,8 +1,9 @@
 import { Component } from "@angular/core";
+import { ThemeToggleComponent } from "./theme-toggle.component";
 
 @Component({
   selector: "app-header",
-  imports: [],
+  imports: [ThemeToggleComponent],
   template: `
     <header>
       <nav>
@@ -11,7 +12,9 @@ import { Component } from "@angular/core";
         </ul>
         <ul>
           <li><a href="#">User</a></li>
-          <li><a href="#">Theme</a></li>
+          <li>
+            <app-theme-toggle />
+          </li>
         </ul>
       </nav>
     </header>
