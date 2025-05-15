@@ -1,27 +1,47 @@
-import { Injectable } from '@angular/core';
+import { HttpClient } from "@angular/common/http";
+import { inject, Injectable } from "@angular/core";
+import { APP } from "../core/app-token";
+import { LogEntryDTO } from "./log-entry-dto.type";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class LogService {
+  // ToDo: use app token to add app name to the log
+  // ToDo: add timestamp to the log
+  // ToDo: add emoji based on log level
 
-// ToDo: use app token to add app name to the log
-// ToDo: add timestamp to the log
-// ToDo: add emoji based on log level
-
-  public info(message: string) {
-    console.log(message);
-  }
-
-  public error(message: string) {
-    console.error(message);
-  }
-
-  public warn(message: string) {
-    console.warn(message);
-  }
+  private http: HttpClient = inject(HttpClient);
+  private appToken = inject(APP);
 
   public debug(message: string) {
     console.debug(message);
+    //this.sendLog(this.buildLogEntry(message, "debug"));
+  }
+  public info(message: string) {
+    console.log(message);
+    this.sendLog(this.buildLogEntry(message, "info"));
+  }
+  public warn(message: string) {
+    console.warn(message);
+    this.sendLog(this.buildLogEntry(message, "warn"));
+  }
+  public error(message: string) {
+    console.error(message);
+    this.sendLog(this.buildLogEntry(message, "error"));
+  }
+  private buildLogEntry(message: string, level: string): LogEntryDTO {
+    return {
+      message,
+      level,
+      context: "",
+      timestamp: Date.now(),
+      source: this.appToken.name,
+      ip: "127.0.0.1",
+    };
+  }
+
+  private sendLog(logEntry: LogEntryDTO) {
+    this.http.post("http://localhost:3000/logs", logEntry).subscribe();
   }
 }

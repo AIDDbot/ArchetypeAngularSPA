@@ -1,12 +1,12 @@
 {
   "name": "c0-angular-spa",
   "version": "1.0.0",
-    "author": {
-		"name": "Alberto Basalo",
-		"company": "AI code Academy",
-		"website": "https://aicode.academy",
-		"email": "albertobasalo@aicode.academy"
-	},
+  "author": {
+    "name": "Alberto Basalo",
+    "company": "AI code Academy",
+    "website": "https://aicode.academy",
+    "email": "albertobasalo@aicode.academy"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
