@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { firstValueFrom } from "rxjs";
-import { APP } from "../core/app-token";
+import { APP } from "./app.token";
 import { LogEntryDTO } from "./log-entry-dto.type";
 
 @Injectable({

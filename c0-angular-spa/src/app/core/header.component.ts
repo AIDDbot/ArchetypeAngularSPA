@@ -1,6 +1,6 @@
 import { Component, inject } from "@angular/core";
 import { RouterLink } from "@angular/router";
-import { APP } from "./app-token";
+import { APP } from "../shared/app.token";
 import { ThemeToggleComponent } from "./theme-toggle.component";
 
 @Component({
@@ -10,7 +10,11 @@ import { ThemeToggleComponent } from "./theme-toggle.component";
     <header>
       <nav>
         <ul>
-          <li ><a routerLink="/"><strong>{{ app.name }}</strong></a></li>
+          <li>
+            <a routerLink="/"
+              ><strong>{{ app.name }}</strong></a
+            >
+          </li>
         </ul>
         <ul>
           <li><a href="#">User</a></li>

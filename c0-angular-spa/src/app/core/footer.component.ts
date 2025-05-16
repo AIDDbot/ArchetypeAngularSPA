@@ -1,8 +1,8 @@
-import { Component, inject } from '@angular/core';
-import { APP } from './app-token';
+import { Component, inject } from "@angular/core";
+import { APP } from "../shared/app.token";
 
 @Component({
-  selector: 'app-footer',
+  selector: "app-footer",
   imports: [],
   template: `
     <footer>

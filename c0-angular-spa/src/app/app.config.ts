@@ -7,8 +7,8 @@ import { provideRouter } from "@angular/router";
 import { provideHttpClient, withInterceptors } from "@angular/common/http";
 import { environment } from "../environments/environment";
 import { routes } from "./app.routes";
-import { provideApp, withApp } from "./core/app-token";
 import { cacheInterceptor } from "./core/cache.interceptor";
+import { provideApp, withData } from "./shared/app.token";
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -16,7 +16,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(withInterceptors([cacheInterceptor])),
     provideApp(
-      withApp(
+      withData(
         environment.APP_NAME,
         environment.APP_VERSION,
         environment.APP_AUTHOR
