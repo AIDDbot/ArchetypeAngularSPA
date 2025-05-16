@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { firstValueFrom } from "rxjs";
 import { APP } from "./app.token";
+import { GlobalStore } from "./global/global.store";
 import { LogEntryDTO } from "./log-entry-dto.type";
 
 @Injectable({
@@ -14,6 +15,7 @@ export class LogService {
 
   private http: HttpClient = inject(HttpClient);
   private appToken = inject(APP);
+  private globalStore = inject(GlobalStore);
 
   public debug(message: string) {
     console.debug(message);
@@ -37,7 +39,7 @@ export class LogService {
       context: "",
       timestamp: Date.now(),
       source: this.appToken.name,
-      ip: "127.0.0.1",
+      ip: this.globalStore.state.ip || "127.0.0.1",
     };
   }
 
