@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
+import { firstValueFrom } from "rxjs";
 import { APP } from "../core/app-token";
 import { LogEntryDTO } from "./log-entry-dto.type";
 
@@ -16,7 +17,6 @@ export class LogService {
 
   public debug(message: string) {
     console.debug(message);
-    //this.sendLog(this.buildLogEntry(message, "debug"));
   }
   public info(message: string) {
     console.log(message);
@@ -41,7 +41,9 @@ export class LogService {
     };
   }
 
-  private sendLog(logEntry: LogEntryDTO) {
-    this.http.post("http://localhost:3000/logs", logEntry).subscribe();
+  private async sendLog(logEntry: LogEntryDTO) {
+    const request = this.http.post("http://localhost:3000/logs", logEntry);
+    // request.subscribe();
+    await firstValueFrom(request);
   }
 }
