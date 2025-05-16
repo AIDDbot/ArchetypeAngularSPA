@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { FooterComponent } from './core/footer.component';
-import { HeaderComponent } from './core/header.component';
+import { Component } from "@angular/core";
+import { RouterOutlet } from "@angular/router";
+import { FooterComponent } from "./core/footer.component";
+import { HeaderComponent } from "./core/header.component";
 
 @Component({
-  selector: 'app-root',
+  selector: "app-root",
   imports: [RouterOutlet, HeaderComponent, FooterComponent],
   template: `
     <app-header />
@@ -14,5 +14,5 @@ import { HeaderComponent } from './core/header.component';
   styles: [],
 })
 export class AppComponent {
-  title = 'c0-angular-spa';
+  protected title: string = "c0-angular-spa";
 }

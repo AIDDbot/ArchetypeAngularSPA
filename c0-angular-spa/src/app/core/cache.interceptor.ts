@@ -1,28 +1,35 @@
-import { HttpInterceptorFn, HttpResponse } from "@angular/common/http";
+import {
+  HttpEvent,
+  HttpInterceptorFn,
+  HttpResponse,
+} from "@angular/common/http";
 import { inject } from "@angular/core";
 import { of } from "rxjs";
 import { filter, tap } from "rxjs/operators";
 import { CacheService } from "../shared/cache.service";
-import { LogService } from "../shared/log.service";
+import { LogService } from "../shared/log/log.service";
 
 export const cacheInterceptor: HttpInterceptorFn = (req, next) => {
   if (req.method !== "GET") {
     return next(req);
   }
 
-  const cache = inject(CacheService);
-  const log = inject(LogService);
+  const cache: CacheService = inject(CacheService);
+  const log: LogService = inject(LogService);
 
-  const cachedResponse = cache.get(req.url);
+  const cachedResponse: HttpResponse<unknown> | undefined = cache.get(
+    req.url
+  ) as HttpResponse<unknown>;
+
   if (cachedResponse) {
     log.info(`Cache hit for ${req.url}`);
     return of(cachedResponse as HttpResponse<unknown>);
   }
 
   return next(req).pipe(
-    filter((event) => event instanceof HttpResponse),
-    tap((event) => {
-      cache.set(req.url, event as HttpResponse<unknown>);
+    filter((event: HttpEvent<unknown>) => event instanceof HttpResponse),
+    tap((event: HttpResponse<unknown>) => {
+      cache.set(req.url, event);
       log.info(`Cache set for ${req.url}`);
     })
   );

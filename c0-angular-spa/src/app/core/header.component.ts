@@ -1,6 +1,7 @@
 import { Component, inject } from "@angular/core";
 import { RouterLink } from "@angular/router";
-import { APP } from "../shared/app.token";
+import { ENV } from "../shared/env/env.token";
+import { Env } from "../shared/env/env.type";
 import { ThemeToggleComponent } from "./theme-toggle.component";
 
 @Component({
@@ -12,7 +13,7 @@ import { ThemeToggleComponent } from "./theme-toggle.component";
         <ul>
           <li>
             <a routerLink="/"
-              ><strong>{{ app.name }}</strong></a
+              ><strong>{{ env.name }}</strong></a
             >
           </li>
         </ul>
@@ -28,5 +29,5 @@ import { ThemeToggleComponent } from "./theme-toggle.component";
   styles: ``,
 })
 export class HeaderComponent {
-  protected app = inject(APP);
+  protected env: Env = inject(ENV);
 }

@@ -1,4 +1,4 @@
-import { Component, computed, inject } from "@angular/core";
+import { Component, computed, inject, Signal } from "@angular/core";
 import { GlobalStore } from "../shared/global/global.store";
 
 @Component({
@@ -10,10 +10,12 @@ import { GlobalStore } from "../shared/global/global.store";
   `,
 })
 export class ThemeToggleComponent {
-  private globalStore = inject(GlobalStore);
-  private theme = this.globalStore.theme;
+  private globalStore: GlobalStore = inject(GlobalStore);
+  private theme: Signal<string> = this.globalStore.theme;
 
-  protected icon = computed(() => (this.theme() === "light" ? "🔳" : "🔲"));
+  protected icon: Signal<string> = computed(() =>
+    this.theme() === "light" ? "🔳" : "🔲"
+  );
 
   protected toggleTheme(): void {
     const newTheme = this.theme() === "light" ? "dark" : "light";

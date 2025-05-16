@@ -1,5 +1,6 @@
 import { Component, inject } from "@angular/core";
-import { APP } from "../shared/app.token";
+import { ENV } from "../shared/env/env.token";
+import { Env } from "../shared/env/env.type";
 
 @Component({
   selector: "app-footer",
@@ -7,13 +8,13 @@ import { APP } from "../shared/app.token";
   template: `
     <footer>
       <small>
-        &copy; {{ year }} by {{ app.author }}. All rights reserved.
+        &copy; {{ year }} by {{ env.author }}. All rights reserved.
       </small>
     </footer>
   `,
   styles: ``,
 })
 export class FooterComponent {
-  protected app = inject(APP);
-  protected year = new Date().getFullYear();
+  protected env: Env = inject(ENV);
+  protected year: number = new Date().getFullYear();
 }

@@ -1,4 +1,13 @@
-import { computed, effect, inject, Injectable, signal } from "@angular/core";
+import {
+  computed,
+  effect,
+  EffectRef,
+  inject,
+  Injectable,
+  Signal,
+  signal,
+  WritableSignal,
+} from "@angular/core";
 import { CacheService } from "../cache.service";
 import { defaultGlobalState, GlobalState } from "./global.type";
 
@@ -6,38 +15,40 @@ import { defaultGlobalState, GlobalState } from "./global.type";
   providedIn: "root",
 })
 export class GlobalStore {
-  private cache = inject(CacheService);
-  private readonly store = signal<GlobalState>(this.getInitialState());
+  private cache: CacheService = inject(CacheService);
+  private readonly store: WritableSignal<GlobalState> = signal<GlobalState>(
+    this.getInitialState()
+  );
 
   private getInitialState(): GlobalState {
-    const cachedState = this.cache.get("global") as GlobalState;
+    const cachedState = this.cache.get<GlobalState>("global");
     return cachedState || defaultGlobalState;
   }
 
-  public get state() {
+  public get state(): GlobalState {
     return this.store();
   }
 
-  public readonly theme = computed(() => this.state.theme);
+  public readonly theme: Signal<string> = computed(() => this.state.theme);
 
-  public changeTheme(theme: string) {
+  public changeTheme(theme: string): void {
     this.store.update((state) => ({ ...state, theme }));
   }
 
-  public changeUser(user: string) {
+  public changeUser(user: string): void {
     this.store.update((state) => ({ ...state, user }));
   }
 
-  public changeIp(ip: string) {
+  public changeIp(ip: string): void {
     this.store.update((state) => ({ ...state, ip }));
   }
 
-  private onChangeEffect = effect(() => {
+  private onChangeEffect: EffectRef = effect(() => {
     const state = this.state;
     this.cache.set("global", state);
   });
 
-  private onThemeChange = effect(() => {
+  private onThemeChange: EffectRef = effect(() => {
     const theme = this.theme();
     document.documentElement.setAttribute("data-theme", theme);
   });

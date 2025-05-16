@@ -1,8 +1,7 @@
-import { Component, input } from '@angular/core';
+import { Component, input, InputSignal } from "@angular/core";
 
 @Component({
-  selector: 'app-page',
-  imports: [],
+  selector: "app-page",
   template: `
     <article>
       <header>
@@ -15,8 +14,7 @@ import { Component, input } from '@angular/core';
       </main>
     </article>
   `,
-  styles: ``
 })
 export class PageComponent {
-  public title = input.required<string>();
+  public title: InputSignal<string> = input.required<string>();
 }
