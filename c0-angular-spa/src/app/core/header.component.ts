@@ -18,7 +18,7 @@ import { ThemeToggleComponent } from "./theme-toggle.component";
           </li>
         </ul>
         <ul>
-          <li><a href="#">User</a></li>
+          <li><a routerLink="/user">User</a></li>
           <li>
             <app-theme-toggle />
           </li>
