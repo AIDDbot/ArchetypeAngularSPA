@@ -11,6 +11,7 @@
 		"source.fixAll.eslint": "always",
 		"source.organizeImports": "always"
 	},
+  "material-icon-theme.activeIconPack": "angular",
 	"material-icon-theme.folders.associations": {
 		".ai": "robot",
 		"architect": "godot",
@@ -32,7 +33,8 @@
 		"*.adapter.ts": "adonis",
 		"*.builder.ts": "unocss",
 		"*.command.ts": "console",
-		"*.component.ts": "html",
+    "*.config.ts": "tune",
+		"*.component.ts": "angular-component",
 		"*.decorator.ts": "renovate",
 		"*.dto.ts": "raml",
 		"*.facade.ts": "mjml",
@@ -43,11 +45,15 @@
 		"*.mapper.ts": "purescript",
 		"*.module.ts": "less",
 		"*.operations.ts": "url",
+    "*.page.ts": "angular-guard",
 		"*.singleton.ts": "stitches",
 		"*.repository.ts": "database",
-		"*.service.ts": "slint",
+		"*.service.ts": "angular-service",
 		"*.type.ts": "raml",
 		"*.utils.ts": "tilt",
 		"*.validator.ts": "velite"
+	},
+	"workbench.colorCustomizations": {
+		"statusBar.border": "#c3002f"
 	}
 }
