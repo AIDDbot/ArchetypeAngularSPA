@@ -11,7 +11,7 @@ export const USER_ROUTES: Routes = [
   },
   {
     path: "register",
-    loadComponent: () => import("./register.page"),
+    loadComponent: () => import("./register/register.page"),
   },
   {
     path: "reset-password",

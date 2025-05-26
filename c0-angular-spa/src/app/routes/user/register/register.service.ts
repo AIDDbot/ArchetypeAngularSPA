@@ -7,8 +7,8 @@ import {
   Signal,
   signal,
 } from "@angular/core";
+import { UserTokenDto } from "../user-token.dto.type";
 import { RegisterDto } from "./register-dto.type";
-import { UserTokenDto } from "./user-token.dto.type";
 
 @Injectable({
   providedIn: "root",
@@ -16,24 +16,28 @@ import { UserTokenDto } from "./user-token.dto.type";
 export class RegisterStoreService {
   private http = inject(HttpClient);
   private url = "http://localhost:3000/users/register";
-  private registerSignal = signal<UserTokenDto | undefined>(undefined);
+
+  private userTokenSignal = signal<UserTokenDto | undefined>(undefined);
   private registerErrorSignal = signal<string | undefined>(undefined);
+
   private tokenEffect = effect(() => {
-    const tokenValue = this.registerSignal()?.token;
+    const tokenValue = this.userTokenSignal()?.token;
     if (tokenValue) {
       console.log("Token value", tokenValue);
     }
   });
-  public userSignal: Signal<string | undefined> = computed(
-    () => this.registerSignal()?.user
+
+  public userSignal = computed<string | undefined>(
+    () => this.userTokenSignal()?.user
   );
   public errorSignal: Signal<string | undefined> =
     this.registerErrorSignal.asReadonly();
+
   public register(registerDto: RegisterDto): void {
-    this.registerSignal.set(undefined);
+    this.userTokenSignal.set(undefined);
     this.registerErrorSignal.set(undefined);
     this.http.post<UserTokenDto>(this.url, registerDto).subscribe({
-      next: (body) => this.registerSignal.set(body),
+      next: (userToken) => this.userTokenSignal.set(userToken),
       error: (error) => this.registerErrorSignal.set(error.message),
     });
   }

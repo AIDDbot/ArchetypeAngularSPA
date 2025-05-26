@@ -1,13 +1,12 @@
 import { HttpInterceptorFn, HttpResponse } from "@angular/common/http";
 import { of, throwError } from "rxjs";
+import { RegisterDto } from "../routes/user/register/register-dto.type";
 
 export const registerFakeInterceptor: HttpInterceptorFn = (req, next) => {
   if (req.method !== "POST" || !req.url.includes("register")) {
     return next(req);
   }
-  // get body payload
-  const body: any = (req.body as any).request;
-  console.log("Body", body);
+  const body: RegisterDto = req.body as RegisterDto;
   if (Math.random() > 0.09) {
     return of(
       new HttpResponse({

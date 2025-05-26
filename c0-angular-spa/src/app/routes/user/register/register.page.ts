@@ -1,11 +1,11 @@
 import { Component, inject, Signal } from "@angular/core";
+import { RegisterDto } from "./register-dto.type";
+import { RegisterForm } from "./register.form";
 import { RegisterStoreService } from "./register.service";
-
 @Component({
-  imports: [],
+  imports: [RegisterForm],
   template: `
-    <p>Fake Form</p>
-    <button (click)="register()">Register</button>
+    <app-register-form (submit)="register($event)" />
     <pre>
       {{ userSignal() }}
       {{ errorSignal() }}
@@ -21,10 +21,7 @@ export default class RegisterPage {
   protected errorSignal: Signal<string | undefined> =
     this.registerStore.errorSignal;
 
-  public register() {
-    this.registerStore.register({
-      email: "user@fake.com",
-      password: "password",
-    });
+  public register(registerDto: RegisterDto) {
+    this.registerStore.register(registerDto);
   }
 }
