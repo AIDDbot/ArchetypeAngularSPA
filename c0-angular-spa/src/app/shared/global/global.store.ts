@@ -8,6 +8,7 @@ import {
   signal,
   WritableSignal,
 } from "@angular/core";
+import { Router } from "@angular/router";
 import { CacheService } from "../cache.service";
 import { defaultGlobalState, GlobalState } from "./global.type";
 
@@ -16,6 +17,7 @@ import { defaultGlobalState, GlobalState } from "./global.type";
 })
 export class GlobalStore {
   private cache: CacheService = inject(CacheService);
+  private router = inject(Router);
   private readonly store: WritableSignal<GlobalState> = signal<GlobalState>(
     this.getInitialState()
   );
@@ -36,6 +38,7 @@ export class GlobalStore {
   }
 
   public changeUser(user: string): void {
+    console.log("changeUser", user);
     this.store.update((state) => ({ ...state, user }));
   }
 
@@ -51,5 +54,13 @@ export class GlobalStore {
   private onThemeChange: EffectRef = effect(() => {
     const theme = this.theme();
     document.documentElement.setAttribute("data-theme", theme);
+  });
+
+  private onUserChange: EffectRef = effect(() => {
+    const user = this.state.user;
+    console.log("onUserChange", user);
+    if (user) {
+      this.router.navigate(["/user"]);
+    }
   });
 }

@@ -9,6 +9,7 @@ import { provideRouter } from "@angular/router";
 import { provideHttpClient, withInterceptors } from "@angular/common/http";
 import { environment } from "../environments/environment";
 import { routes } from "./app.routes";
+import { authInterceptor } from "./core/auth.interceptor";
 import { cacheInterceptor } from "./core/cache.interceptor";
 import { logFakeInterceptor } from "./core/log-fake.interceptor";
 import { registerFakeInterceptor } from "./core/register-fake.interceptor";
@@ -37,6 +38,7 @@ export const appConfig: ApplicationConfig = {
         cacheInterceptor,
         registerFakeInterceptor,
         logFakeInterceptor,
+        authInterceptor,
       ])
     ),
   ],

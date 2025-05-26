@@ -51,10 +51,12 @@ export class RegisterForm {
       this.form.markAllAsTouched();
       return;
     }
-    this.submit.emit({
+    const body: RegisterDto = {
       name: this.form.value.name ?? "",
       email: this.form.value.email ?? "",
       password: this.form.value.password ?? "",
-    });
+    };
+    console.log("onSubmit", body);
+    this.submit.emit(body);
   }
 }

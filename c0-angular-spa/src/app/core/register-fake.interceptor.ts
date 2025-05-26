@@ -1,18 +1,18 @@
 import { HttpInterceptorFn, HttpResponse } from "@angular/common/http";
 import { of, throwError } from "rxjs";
-import { RegisterDto } from "../routes/user/register/register-dto.type";
 
 export const registerFakeInterceptor: HttpInterceptorFn = (req, next) => {
   if (req.method !== "POST" || !req.url.includes("register")) {
     return next(req);
   }
-  const body: RegisterDto = req.body as RegisterDto;
+  const body: any = req.body as any;
+  console.log("registerFakeInterceptor", body);
   if (Math.random() > 0.09) {
     return of(
       new HttpResponse({
         status: 201,
         body: {
-          user: body.email,
+          user: body.email || "not_a_user@fake.com",
           token: "a_fake_token" + new Date().getTime(),
         },
       })

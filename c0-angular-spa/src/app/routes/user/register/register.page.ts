@@ -7,7 +7,6 @@ import { RegisterStoreService } from "./register.service";
   template: `
     <app-register-form (submit)="register($event)" />
     <pre>
-      {{ userSignal() }}
       {{ errorSignal() }}
     </pre
     >
@@ -16,8 +15,6 @@ import { RegisterStoreService } from "./register.service";
 export default class RegisterPage {
   private registerStore = inject(RegisterStoreService);
 
-  protected userSignal: Signal<string | undefined> =
-    this.registerStore.userSignal;
   protected errorSignal: Signal<string | undefined> =
     this.registerStore.errorSignal;
 
