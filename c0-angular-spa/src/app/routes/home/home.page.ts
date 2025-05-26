@@ -12,9 +12,10 @@ import { IpApi } from "./ip-api.type";
     <app-page [title]="title">
       <p>Welcome to the home page</p>
       <pre>
+        
+<!-- EJEMPLO DEL USO DE DEFER CON EL RECURSO... -->
         {{ ipApi() | json }}
-      </pre
-      >
+      </pre>
     </app-page>
   `,
   styles: ``,
