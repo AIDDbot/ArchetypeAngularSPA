@@ -11,14 +11,15 @@ import { ThemeToggleComponent } from "./theme-toggle.component";
     <header>
       <nav>
         <ul>
-          <li>
-            <a routerLink="/"
-              ><strong>{{ env.name }}</strong></a
-            >
-          </li>
+          <a [routerLink]="['']">Home</a>
         </ul>
         <ul>
-          <li><a routerLink="/user">User</a></li>
+          <li>
+            <a [routerLink]="['user']">User</a>
+          </li>
+          <li>
+            <a [routerLink]="['user', 'register']">Register</a>
+          </li>
           <li>
             <app-theme-toggle />
           </li>

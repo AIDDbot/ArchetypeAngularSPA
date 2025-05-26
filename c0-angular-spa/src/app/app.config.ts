@@ -10,6 +10,8 @@ import { provideHttpClient, withInterceptors } from "@angular/common/http";
 import { environment } from "../environments/environment";
 import { routes } from "./app.routes";
 import { cacheInterceptor } from "./core/cache.interceptor";
+import { logFakeInterceptor } from "./core/log-fake.interceptor";
+import { registerFakeInterceptor } from "./core/register-fake.interceptor";
 import { provideEnv, withData } from "./shared/env/env.token";
 import { GlobalStore } from "./shared/global/global.store";
 import { LogService } from "./shared/log/log.service";
@@ -30,6 +32,12 @@ export const appConfig: ApplicationConfig = {
     }),
     provideExperimentalZonelessChangeDetection(),
     provideRouter(routes),
-    provideHttpClient(withInterceptors([cacheInterceptor])),
+    provideHttpClient(
+      withInterceptors([
+        cacheInterceptor,
+        registerFakeInterceptor,
+        logFakeInterceptor,
+      ])
+    ),
   ],
 };
