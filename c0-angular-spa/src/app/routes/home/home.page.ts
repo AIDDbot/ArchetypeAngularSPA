@@ -1,33 +1,35 @@
-import { JsonPipe } from "@angular/common";
-import { Component, inject, WritableSignal } from "@angular/core";
+import { Component, inject, Signal, signal } from "@angular/core";
+import { ErrorComponent } from "../../shared/error.component";
 import { LogService } from "../../shared/log/log.service";
 import { PageComponent } from "../../shared/page.component";
+import { WaitingComponent } from "../../shared/waiting.component";
+import { HomeComponent } from "./home.component";
 import { HomeStoreService } from "./home.store.service";
 import { IpApi } from "./ip-api.type";
 
 @Component({
   selector: "app-home",
-  imports: [PageComponent, JsonPipe],
+  imports: [PageComponent, HomeComponent, WaitingComponent, ErrorComponent],
   template: `
-    <app-page [title]="title">
-      <p>Welcome to the home page</p>
-      <pre>
-        
-<!-- EJEMPLO DEL USO DE DEFER CON EL RECURSO... -->
-        {{ ipApi() | json }}
-      </pre>
+    <app-page [title]="title()">
+      @if (ipApiStatus() === "Loading") {
+        <app-waiting />
+      }
+      @if (ipApiStatus() === "Error") {
+        <app-error />
+      }
+      @defer (when ipApiStatus()==='Resolved') {
+        <app-home [ipApi]="ipApi()" />
+      }
     </app-page>
   `,
   styles: ``,
 })
 export default class HomePage {
-  private log: LogService = inject(LogService);
-  private homeStore: HomeStoreService = inject(HomeStoreService);
-  protected ipApi: WritableSignal<IpApi | undefined> =
-    this.homeStore.ipApiResource.value;
-  protected title = "Home page";
+  private readonly log = inject(LogService);
+  private readonly homeStore = inject(HomeStoreService);
 
-  constructor() {
-    this.log.info("HomePage visited");
-  }
+  protected title: Signal<string> = signal("Home Page Title");
+  protected ipApi: Signal<IpApi | undefined> = this.homeStore.ipApi;
+  protected ipApiStatus: Signal<string> = this.homeStore.ipApiStatus;
 }
