@@ -1,6 +1,5 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
-import { firstValueFrom, Observable } from "rxjs";
 import { ENV } from "../env/env.token";
 import { Env } from "../env/env.type";
 import { GlobalStore } from "../global/global.store";
@@ -43,12 +42,7 @@ export class LogService {
     };
   }
 
-  private async sendLog(logEntry: LogEntryDTO): Promise<void> {
-    const request: Observable<void> = this.http.post<void>(
-      "http://localhost:3000/logs",
-      logEntry
-    );
-    // request.subscribe();
-    await firstValueFrom(request);
+  private sendLog(logEntry: LogEntryDTO): void {
+    this.http.post<void>("http://localhost:3000/logs", logEntry).subscribe();
   }
 }

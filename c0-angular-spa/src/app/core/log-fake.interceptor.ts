@@ -8,7 +8,7 @@ export const logFakeInterceptor: HttpInterceptorFn = (req, next) => {
   return of(
     new HttpResponse({
       status: 201,
-      body: { message: "Log sent" },
+      body: { message: "Log entry received" },
     })
   );
 };
