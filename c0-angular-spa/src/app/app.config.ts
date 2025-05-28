@@ -4,7 +4,7 @@ import {
   provideAppInitializer,
   provideExperimentalZonelessChangeDetection,
 } from "@angular/core";
-import { provideRouter } from "@angular/router";
+import { provideRouter, withComponentInputBinding } from "@angular/router";
 
 import { provideHttpClient, withInterceptors } from "@angular/common/http";
 import { environment } from "../environments/environment";
@@ -29,10 +29,10 @@ export const appConfig: ApplicationConfig = {
     provideAppInitializer(async () => {
       const globalStore = inject(GlobalStore);
       const logService = inject(LogService);
-      logService.info(`App initialized at ${globalStore.state.ip}`);
+      logService.info(`App initialized at ${globalStore.ip()}`);
     }),
     provideExperimentalZonelessChangeDetection(),
-    provideRouter(routes),
+    provideRouter(routes, withComponentInputBinding()),
     provideHttpClient(
       withInterceptors([
         cacheInterceptor,

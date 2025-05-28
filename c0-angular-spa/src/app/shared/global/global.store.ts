@@ -46,7 +46,7 @@ export class GlobalStore {
   }
 
   private onAnyChangeEffect: EffectRef = effect(() => {
-    const state = this.state;
+    const state = this.state();
     this.cache.set("global", state);
   });
 
@@ -58,7 +58,7 @@ export class GlobalStore {
   private onUserChange: EffectRef = effect(() => {
     const user = this.state().user;
     if (user) {
-      this.router.navigate(["/user"]);
+      this.router.navigate(["/user", user]);
     }
   });
 }

@@ -13,7 +13,7 @@ import { RegisterDto } from "./register-dto.type";
   selector: "app-register-form",
   imports: [ReactiveFormsModule, FormErrorsComponent],
   template: `
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <form [formGroup]="form">
       <fieldset>
         <label for="name">Name</label>
         <input
@@ -43,7 +43,7 @@ import { RegisterDto } from "./register-dto.type";
           [attr.aria-invalid]="isInvalid('password2')"
         />
       </fieldset>
-      <button type="submit" [disabled]="form.invalid">Register</button>
+      <button type="button" (click)="onSubmit()">Register</button>
       <app-form-errors [form]="form" />
     </form>
   `,

@@ -1,14 +1,9 @@
-import { Component } from "@angular/core";
-import { RouterLink } from "@angular/router";
+import { Component, input } from "@angular/core";
 
 @Component({
-  imports: [RouterLink],
-  template: `
-    <ul>
-      <li><a routerLink="/user/login">Login</a></li>
-      <li><a routerLink="/user/register">Register</a></li>
-      <li><a routerLink="/user/reset-password">Reset Password</a></li>
-    </ul>
-  `,
+  imports: [],
+  template: ` <h1>User: {{ userId() }}</h1> `,
 })
-export default class UserPage {}
+export default class UserPage {
+  public userId = input<string>();
+}
