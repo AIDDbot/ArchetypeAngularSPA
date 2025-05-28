@@ -6,6 +6,7 @@ import {
   Validators,
 } from "@angular/forms";
 import { FormErrorsComponent } from "../../../shared/form-errors.component";
+import { mustMatchValidator, passwordValidator } from "./password.validator";
 import { RegisterDto } from "./register-dto.type";
 
 @Component({
@@ -15,13 +16,32 @@ import { RegisterDto } from "./register-dto.type";
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <fieldset>
         <label for="name">Name</label>
-        <input id="name" formControlName="name" />
+        <input
+          id="name"
+          formControlName="name"
+          [attr.aria-invalid]="isInvalid('name')"
+        />
         <label for="email">Email</label>
-        <input id="email" formControlName="email" type="email" />
+        <input
+          id="email"
+          formControlName="email"
+          type="email"
+          [attr.aria-invalid]="isInvalid('email')"
+        />
         <label for="password">Password</label>
-        <input id="password" formControlName="password" type="password" />
+        <input
+          id="password"
+          formControlName="password"
+          type="password"
+          [attr.aria-invalid]="isInvalid('password')"
+        />
         <label for="password2">Repeat Password</label>
-        <input id="password2" formControlName="password2" type="password" />
+        <input
+          id="password2"
+          formControlName="password2"
+          type="password"
+          [attr.aria-invalid]="isInvalid('password2')"
+        />
       </fieldset>
       <button type="submit" [disabled]="form.invalid">Register</button>
       <app-form-errors [form]="form" />
@@ -30,23 +50,35 @@ import { RegisterDto } from "./register-dto.type";
 })
 export class RegisterForm {
   public submit = output<RegisterDto>();
-  protected form = new FormGroup({
-    name: new FormControl("Pete", [Validators.required]),
-    email: new FormControl("pete@fake.com", [
-      Validators.required,
-      Validators.email,
-    ]),
-    password: new FormControl("password", [
-      Validators.required,
-      Validators.minLength(4),
-    ]),
-    password2: new FormControl("password", [
-      Validators.required,
-      Validators.minLength(4),
-    ]),
-  });
+  protected form = new FormGroup(
+    {
+      name: new FormControl("Pete", [Validators.required]),
+      email: new FormControl("pete@fake.com", [
+        Validators.required,
+        Validators.email,
+      ]),
+      password: new FormControl("password", [
+        Validators.required,
+        Validators.minLength(4),
+        passwordValidator,
+      ]),
+      password2: new FormControl("password", [
+        Validators.required,
+        Validators.minLength(4),
+      ]),
+    },
+    {
+      validators: [mustMatchValidator("password", "password2")],
+    }
+  );
 
-  public onSubmit(): void {
+  protected isInvalid(controlName: string): boolean {
+    const control = this.form.get(controlName);
+    if (!control) return false;
+    return control.invalid && control.touched;
+  }
+
+  protected onSubmit(): void {
     if (!this.form.valid) {
       this.form.markAllAsTouched();
       return;

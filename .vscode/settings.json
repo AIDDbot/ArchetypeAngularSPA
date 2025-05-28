@@ -39,6 +39,7 @@
 		"*.dto.ts": "raml",
 		"*.facade.ts": "mjml",
 		"*.factory.ts": "fortran",
+    "*.form.ts": "angular-component",
 		"*.functions.ts": "url",
 		"*.gateway.ts": "ifanr-cloud",
 		"*.interface.ts": "raml",
