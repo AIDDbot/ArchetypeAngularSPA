@@ -72,14 +72,15 @@ export class RegisterForm {
     }
   );
 
-  protected isInvalid(controlName: string): boolean {
+  protected isInvalid(controlName: string): boolean | undefined {
     const control = this.form.get(controlName);
-    if (!control) return false;
-    return control.invalid && control.touched;
+    if (!control) return undefined;
+    if (control.pristine) return undefined;
+    return control.invalid;
   }
 
   protected onSubmit(): void {
-    if (!this.form.valid) {
+    if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
@@ -88,7 +89,6 @@ export class RegisterForm {
       email: this.form.value.email ?? "",
       password: this.form.value.password ?? "",
     };
-    console.log("onSubmit", body);
     this.submit.emit(body);
   }
 }

@@ -12,17 +12,19 @@ export class RegisterStoreService {
   private globalStore = inject(GlobalStore);
   private url = "http://localhost:3000/users/register";
 
-  private userTokenSignal = signal<UserTokenDto | undefined>(undefined);
-  private registerErrorSignal = signal<string | undefined>(undefined);
+  private userToken = signal<UserTokenDto | undefined>(undefined);
+  private registerError = signal<string | undefined>(undefined);
 
   private userTokenEffect = effect(() => {
-    const tokenValue = this.userTokenSignal()?.token;
+    const userToken = this.userToken();
+    if (!userToken) return;
+    const tokenValue = userToken.token;
     if (tokenValue) {
       localStorage.setItem("token", tokenValue);
     } else {
       localStorage.removeItem("token");
     }
-    const userValue = this.userTokenSignal()?.user;
+    const userValue = userToken.user;
     if (userValue) {
       this.globalStore.changeUser(userValue);
     } else {
@@ -30,15 +32,14 @@ export class RegisterStoreService {
     }
   });
 
-  public errorSignal: Signal<string | undefined> =
-    this.registerErrorSignal.asReadonly();
+  public error: Signal<string | undefined> = this.registerError.asReadonly();
 
   public register(registerDto: RegisterDto): void {
-    this.userTokenSignal.set(undefined);
-    this.registerErrorSignal.set(undefined);
+    this.userToken.set(undefined);
+    this.registerError.set(undefined);
     this.http.post<UserTokenDto>(this.url, registerDto).subscribe({
-      next: (userToken) => this.userTokenSignal.set(userToken),
-      error: (error) => this.registerErrorSignal.set(error.message),
+      next: (userToken) => this.userToken.set(userToken),
+      error: (error) => this.registerError.set(error.message),
     });
   }
 }

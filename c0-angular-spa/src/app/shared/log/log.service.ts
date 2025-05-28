@@ -38,7 +38,7 @@ export class LogService {
       context: "",
       timestamp: Date.now(),
       source: this.env.name,
-      ip: this.globalStore.state.ip || "127.0.0.1",
+      ip: this.globalStore.ip(),
     };
   }
 

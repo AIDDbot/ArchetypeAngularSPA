@@ -18,7 +18,7 @@ import { defaultGlobalState, GlobalState } from "./global.type";
 export class GlobalStore {
   private cache: CacheService = inject(CacheService);
   private router = inject(Router);
-  private readonly store: WritableSignal<GlobalState> = signal<GlobalState>(
+  private readonly state: WritableSignal<GlobalState> = signal<GlobalState>(
     this.getInitialState()
   );
 
@@ -27,26 +27,25 @@ export class GlobalStore {
     return cachedState || defaultGlobalState;
   }
 
-  public get state(): GlobalState {
-    return this.store();
-  }
+  public readonly theme: Signal<string> = computed(() => this.state().theme);
 
-  public readonly theme: Signal<string> = computed(() => this.state.theme);
+  public readonly ip: Signal<string> = computed(
+    () => this.state().ip || "127.0.0.1"
+  );
 
   public changeTheme(theme: string): void {
-    this.store.update((state) => ({ ...state, theme }));
+    this.state.update((state) => ({ ...state, theme }));
   }
 
   public changeUser(user: string): void {
-    console.log("changeUser", user);
-    this.store.update((state) => ({ ...state, user }));
+    this.state.update((state) => ({ ...state, user }));
   }
 
   public changeIp(ip: string): void {
-    this.store.update((state) => ({ ...state, ip }));
+    this.state.update((state) => ({ ...state, ip }));
   }
 
-  private onChangeEffect: EffectRef = effect(() => {
+  private onAnyChangeEffect: EffectRef = effect(() => {
     const state = this.state;
     this.cache.set("global", state);
   });
@@ -57,8 +56,7 @@ export class GlobalStore {
   });
 
   private onUserChange: EffectRef = effect(() => {
-    const user = this.state.user;
-    console.log("onUserChange", user);
+    const user = this.state().user;
     if (user) {
       this.router.navigate(["/user"]);
     }

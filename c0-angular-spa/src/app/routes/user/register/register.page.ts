@@ -6,19 +6,17 @@ import { RegisterStoreService } from "./register.service";
   imports: [RegisterForm],
   template: `
     <app-register-form (submit)="register($event)" />
-    <pre>
-      {{ errorSignal() }}
-    </pre
-    >
+    @if (error()) {
+      <p>{{ error() }}</p>
+    }
   `,
 })
 export default class RegisterPage {
   private registerStore = inject(RegisterStoreService);
 
-  protected errorSignal: Signal<string | undefined> =
-    this.registerStore.errorSignal;
+  protected error: Signal<string | undefined> = this.registerStore.error;
 
-  public register(registerDto: RegisterDto) {
+  public register(registerDto: RegisterDto): void {
     this.registerStore.register(registerDto);
   }
 }
