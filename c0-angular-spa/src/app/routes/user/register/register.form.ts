@@ -43,7 +43,9 @@ import { RegisterDto } from "./register-dto.type";
           [attr.aria-invalid]="isInvalid('password2')"
         />
       </fieldset>
-      <button type="button" (click)="onSubmit()">Register</button>
+      <button type="button" [disabled]="form.invalid" (click)="onSubmit()">
+        Register
+      </button>
       <app-form-errors [form]="form" />
     </form>
   `,

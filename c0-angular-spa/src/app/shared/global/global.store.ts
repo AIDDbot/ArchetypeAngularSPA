@@ -54,11 +54,4 @@ export class GlobalStore {
     const theme = this.theme();
     document.documentElement.setAttribute("data-theme", theme);
   });
-
-  private onUserChange: EffectRef = effect(() => {
-    const user = this.state().user;
-    if (user) {
-      this.router.navigate(["/user", user]);
-    }
-  });
 }

@@ -2,7 +2,7 @@ import {
   ApplicationConfig,
   inject,
   provideAppInitializer,
-  provideExperimentalZonelessChangeDetection,
+  provideZonelessChangeDetection,
 } from "@angular/core";
 import { provideRouter, withComponentInputBinding } from "@angular/router";
 
@@ -31,7 +31,7 @@ export const appConfig: ApplicationConfig = {
       const logService = inject(LogService);
       logService.info(`App initialized at ${globalStore.ip()}`);
     }),
-    provideExperimentalZonelessChangeDetection(),
+    provideZonelessChangeDetection(),
     provideRouter(routes, withComponentInputBinding()),
     provideHttpClient(
       withInterceptors([

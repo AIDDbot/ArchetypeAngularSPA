@@ -1,6 +1,11 @@
-import { Component, inject, Signal, signal } from "@angular/core";
+import {
+  Component,
+  inject,
+  ResourceStatus,
+  Signal,
+  signal,
+} from "@angular/core";
 import { ErrorComponent } from "../../shared/error.component";
-import { LogService } from "../../shared/log/log.service";
 import { PageComponent } from "../../shared/page.component";
 import { WaitingComponent } from "../../shared/waiting.component";
 import { HomeComponent } from "./home.component";
@@ -8,28 +13,25 @@ import { HomeStoreService } from "./home.store.service";
 import { IpApi } from "./ip-api.type";
 
 @Component({
-  selector: "app-home",
   imports: [PageComponent, HomeComponent, WaitingComponent, ErrorComponent],
   template: `
     <app-page [title]="title()">
-      @if (ipApiStatus() === "Loading") {
+      @if (ipApiStatus() === "loading") {
         <app-waiting />
       }
-      @if (ipApiStatus() === "Error") {
+      @if (ipApiStatus() === "error") {
         <app-error />
       }
-      @defer (when ipApiStatus()==='Resolved') {
+      @defer (when ipApiStatus()==='resolved') {
         <app-home [ipApi]="ipApi()" />
       }
     </app-page>
   `,
-  styles: ``,
 })
 export default class HomePage {
-  private readonly log = inject(LogService);
   private readonly homeStore = inject(HomeStoreService);
 
   protected title: Signal<string> = signal("Home Page Title");
   protected ipApi: Signal<IpApi | undefined> = this.homeStore.ipApi;
-  protected ipApiStatus: Signal<string> = this.homeStore.ipApiStatus;
+  protected ipApiStatus: Signal<ResourceStatus> = this.homeStore.ipApiStatus;
 }

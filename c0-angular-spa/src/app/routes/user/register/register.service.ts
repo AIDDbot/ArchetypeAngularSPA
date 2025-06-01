@@ -12,7 +12,7 @@ export class RegisterStoreService {
   private globalStore = inject(GlobalStore);
   private url = "http://localhost:3000/users/register";
 
-  private userToken = signal<UserTokenDto | undefined>(undefined);
+  public userToken = signal<UserTokenDto | undefined>(undefined);
   private registerError = signal<string | undefined>(undefined);
 
   private userTokenEffect = effect(() => {

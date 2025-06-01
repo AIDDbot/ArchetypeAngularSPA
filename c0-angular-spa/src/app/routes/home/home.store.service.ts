@@ -18,16 +18,15 @@ export class HomeStoreService {
   private readonly globalStore = inject(GlobalStore);
 
   private ipApiResource: HttpResourceRef<IpApi | undefined> =
-    httpResource<IpApi>(this.IP_API_URL);
+    httpResource<IpApi>(() => this.IP_API_URL);
 
   public ipApi: Signal<IpApi | undefined> =
     this.ipApiResource.value.asReadonly();
 
-  public ipApiStatus: Signal<string> = computed(() => {
+  public ipApiStatus: Signal<ResourceStatus> = computed(() => {
     // trigger when the ipApiResource value changes
     const status: ResourceStatus = this.ipApiResource.status();
-    // mapper to string
-    return ResourceStatus[status];
+    return status;
   });
 
   private onIpApiChange = effect(() => {
