@@ -8,7 +8,6 @@ import {
   signal,
   WritableSignal,
 } from "@angular/core";
-import { Router } from "@angular/router";
 import { CacheService } from "../cache.service";
 import { defaultGlobalState, GlobalState } from "./global.type";
 
@@ -17,7 +16,7 @@ import { defaultGlobalState, GlobalState } from "./global.type";
 })
 export class GlobalStore {
   private cache: CacheService = inject(CacheService);
-  private router = inject(Router);
+
   private readonly state: WritableSignal<GlobalState> = signal<GlobalState>(
     this.getInitialState()
   );
@@ -33,11 +32,15 @@ export class GlobalStore {
     () => this.state().ip || "127.0.0.1"
   );
 
+  public readonly user: Signal<string | undefined> = computed(
+    () => this.state().user
+  );
+
   public changeTheme(theme: string): void {
     this.state.update((state) => ({ ...state, theme }));
   }
 
-  public changeUser(user: string): void {
+  public changeUser(user: string | undefined): void {
     this.state.update((state) => ({ ...state, user }));
   }
 

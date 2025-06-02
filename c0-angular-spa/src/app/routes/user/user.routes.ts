@@ -15,6 +15,6 @@ export const USER_ROUTES: Routes = [
   },
   {
     path: ":userId",
-    loadComponent: () => import("./user.page"),
+    loadComponent: () => import("./user-id/user.page"),
   },
 ];

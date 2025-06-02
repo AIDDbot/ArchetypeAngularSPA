@@ -50,6 +50,7 @@
 		"*.singleton.ts": "stitches",
 		"*.repository.ts": "database",
 		"*.service.ts": "angular-service",
+    "*.store.ts": "angular-service",
 		"*.type.ts": "raml",
 		"*.utils.ts": "tilt",
 		"*.validator.ts": "velite"

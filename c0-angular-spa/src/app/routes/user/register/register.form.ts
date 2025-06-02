@@ -54,17 +54,17 @@ export class RegisterForm {
   public submit = output<RegisterDto>();
   protected form = new FormGroup(
     {
-      name: new FormControl("Pete", [Validators.required]),
-      email: new FormControl("pete@fake.com", [
+      name: new FormControl("Test User", [Validators.required]),
+      email: new FormControl("test@fake.com", [
         Validators.required,
         Validators.email,
       ]),
-      password: new FormControl("password", [
+      password: new FormControl("test1234", [
         Validators.required,
         Validators.minLength(4),
         passwordValidator,
       ]),
-      password2: new FormControl("password", [
+      password2: new FormControl("test1234", [
         Validators.required,
         Validators.minLength(4),
       ]),

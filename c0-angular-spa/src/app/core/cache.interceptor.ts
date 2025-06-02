@@ -13,6 +13,9 @@ export const cacheInterceptor: HttpInterceptorFn = (req, next) => {
   if (req.method !== "GET") {
     return next(req);
   }
+  if (!req.url.includes("http://ip-api.com/json")) {
+    return next(req);
+  }
 
   const cache: CacheService = inject(CacheService);
   const log: LogService = inject(LogService);
