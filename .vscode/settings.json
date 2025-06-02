@@ -56,21 +56,21 @@
     "*.validator.ts": "velite"
   },
   "workbench.colorCustomizations": {
-    "activityBar.activeBorder": "#E90464",
-    "commandCenter.activeBorder": "#E90464",
-    "commandCenter.inactiveBorder": "#E90464",
-    "editorCursor.foreground": "#E90464",
+    "activityBar.activeBorder": "#F637E3",
+    "commandCenter.activeBorder": "#F637E3",
+    "commandCenter.inactiveBorder": "#F637E3",
+    "editorCursor.foreground": "#F637E3",
     "editorError.foreground": "#00aaff",
     "editorWarning.foreground": "#00ffff",
-    "focusBorder": "#E90464",
-    "inlineChat.border": "#E90464",
-    "panel.border": "#E90464",
-    "sideBar.border": "#E90464",
-    "statusBar.border": "#E90464",
-    "tab.activeBorder": "#E90464",
-    "tab.activeBorderTop": "#E90464",
-    "terminalCursor.foreground": "#E90464",
-    "tree.indentGuidesStroke": "#E90464",
-    "widget.border": "#E90464"
+    "focusBorder": "#F637E3",
+    "inlineChat.border": "#F637E3",
+    "panel.border": "#F637E3",
+    "sideBar.border": "#F637E3",
+    "statusBar.border": "#F637E3",
+    "tab.activeBorder": "#F637E3",
+    "tab.activeBorderTop": "#F637E3",
+    "terminalCursor.foreground": "#F637E3",
+    "tree.indentGuidesStroke": "#F637E3",
+    "widget.border": "#F637E3"
   }
 }
