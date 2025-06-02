@@ -8,7 +8,7 @@ import { defaultEnv, Env } from "./env.type";
 export const ENV = new InjectionToken<Env>("ENV");
 
 export function provideEnv(
-  envProvider: EnvironmentProviders = defaultEnvPorvider
+  envProvider: EnvironmentProviders = defaultEnvProvider
 ): EnvironmentProviders {
   return makeEnvironmentProviders([envProvider]);
 }
@@ -16,11 +16,17 @@ export function provideEnv(
 export function withData(
   name: string,
   version: string,
-  author: string
+  repository: string,
+  author: {
+    name: string;
+    email: string;
+    url: string;
+  }
 ): EnvironmentProviders {
   const envValue: Env = {
     name,
     version,
+    repository,
     author,
   };
   return makeEnvironmentProviders([
@@ -31,7 +37,7 @@ export function withData(
   ]);
 }
 
-const defaultEnvPorvider = makeEnvironmentProviders([
+const defaultEnvProvider = makeEnvironmentProviders([
   {
     provide: ENV,
     useValue: defaultEnv,

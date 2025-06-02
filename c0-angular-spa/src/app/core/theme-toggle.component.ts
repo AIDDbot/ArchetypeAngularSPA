@@ -4,9 +4,9 @@ import { GlobalStore } from "../shared/global/global.store";
 @Component({
   selector: "app-theme-toggle",
   template: `
-    <a aria-label="Toggle theme">
-      <span (click)="toggleTheme()">{{ icon() }}</span>
-    </a>
+    <span aria-label="Toggle theme" (click)="toggleTheme()">
+      {{ icon() }}
+    </span>
   `,
 })
 export class ThemeToggleComponent {

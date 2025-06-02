@@ -8,7 +8,15 @@ import { Env } from "../shared/env/env.type";
   template: `
     <footer>
       <small>
-        &copy; {{ year }} by {{ env.author }}. All rights reserved.
+        &copy; {{ year }} by
+        <a class="secondary" href="{{ env.author.url }}">{{
+          env.author.name
+        }}</a>
+        . All rights reserved.
+        <i
+          >Based on
+          <a href="{{ env.repository }}">{{ env.name }} {{ env.version }}</a></i
+        >
       </small>
     </footer>
   `,

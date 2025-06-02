@@ -33,6 +33,7 @@ import { RegisterDto } from "./register-dto.type";
           id="password"
           formControlName="password"
           type="password"
+          name="password"
           [attr.aria-invalid]="isInvalid('password')"
         />
         <label for="password2">Repeat Password</label>
@@ -40,11 +41,22 @@ import { RegisterDto } from "./register-dto.type";
           id="password2"
           formControlName="password2"
           type="password"
+          name="password2"
           [attr.aria-invalid]="isInvalid('password2')"
         />
+        <span>Accept the terms and conditions</span>
+        <input
+          id="terms"
+          type="checkbox"
+          formControlName="terms"
+          [attr.aria-invalid]="form.controls['terms'].invalid"
+        />
       </fieldset>
-      <button type="button" [disabled]="form.invalid" (click)="onSubmit()">
+      <button type="submit" [disabled]="form.invalid" (click)="onSubmit()">
         Register
+      </button>
+      <button type="reset" class="secondary outline" (click)="onReset()">
+        Reset
       </button>
       <app-form-errors [form]="form" />
     </form>
@@ -54,20 +66,18 @@ export class RegisterForm {
   public submit = output<RegisterDto>();
   protected form = new FormGroup(
     {
-      name: new FormControl("Test User", [Validators.required]),
-      email: new FormControl("test@fake.com", [
-        Validators.required,
-        Validators.email,
-      ]),
-      password: new FormControl("test1234", [
+      name: new FormControl("", [Validators.required]),
+      email: new FormControl("", [Validators.required, Validators.email]),
+      password: new FormControl("", [
         Validators.required,
         Validators.minLength(4),
         passwordValidator,
       ]),
-      password2: new FormControl("test1234", [
+      password2: new FormControl("", [
         Validators.required,
         Validators.minLength(4),
       ]),
+      terms: new FormControl(false, [Validators.requiredTrue]),
     },
     {
       validators: [mustMatchValidator("password", "password2")],
@@ -92,5 +102,9 @@ export class RegisterForm {
       password: this.form.value.password ?? "",
     };
     this.submit.emit(body);
+  }
+
+  protected onReset(): void {
+    this.form.reset();
   }
 }
