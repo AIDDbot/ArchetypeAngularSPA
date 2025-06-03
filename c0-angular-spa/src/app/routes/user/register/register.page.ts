@@ -8,7 +8,7 @@ import { RegisterStoreService } from "./register.service";
   imports: [RegisterForm, PageComponent, RouterLink],
   template: `
     <app-page title="Register your account">
-      <app-register-form (submit)="register($event)" />
+      <app-register-form (register)="onRegister($event)" />
       <footer>
         @if (error()) {
           <p>{{ error() }}</p>
@@ -34,7 +34,7 @@ export default class RegisterPage {
     }
   });
 
-  public register(registerDto: RegisterDto): void {
+  public onRegister(registerDto: RegisterDto): void {
     this.registerStore.register(registerDto);
   }
 }

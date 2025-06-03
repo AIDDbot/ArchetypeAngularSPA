@@ -29,9 +29,7 @@ import { LoginDto } from "./login-dto.type";
           [attr.aria-invalid]="isInvalid('password')"
         />
       </fieldset>
-      <button type="submit" [disabled]="form.invalid" (click)="onSubmit()">
-        Login
-      </button>
+      <button [disabled]="form.invalid" (click)="onLoginClick()">Login</button>
       <button type="reset" class="secondary outline" (click)="onReset()">
         Reset
       </button>
@@ -40,7 +38,7 @@ import { LoginDto } from "./login-dto.type";
   `,
 })
 export class LoginForm {
-  public submit = output<LoginDto>();
+  public login = output<LoginDto>();
   protected form = new FormGroup({
     email: new FormControl("", [Validators.required, Validators.email]),
     password: new FormControl("", [
@@ -56,7 +54,7 @@ export class LoginForm {
     return control.invalid;
   }
 
-  protected onSubmit(): void {
+  protected onLoginClick(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
@@ -65,7 +63,7 @@ export class LoginForm {
       email: this.form.value.email ?? "",
       password: this.form.value.password ?? "",
     };
-    this.submit.emit(body);
+    this.login.emit(body);
   }
 
   protected onReset(): void {

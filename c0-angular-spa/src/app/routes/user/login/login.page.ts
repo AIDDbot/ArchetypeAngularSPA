@@ -9,7 +9,7 @@ import { LoginStoreService } from "./login.service";
   imports: [LoginForm, PageComponent, RouterLink],
   template: `
     <app-page title="Login to your account">
-      <app-login-form (submit)="login($event)" />
+      <app-login-form (login)="onLogin($event)" />
       <footer>
         @if (error()) {
           <p>{{ error() }}</p>
@@ -35,7 +35,7 @@ export default class LoginPage {
     }
   });
 
-  public login(loginDto: LoginDto): void {
+  public onLogin(loginDto: LoginDto): void {
     this.loginStore.login(loginDto);
   }
 }
