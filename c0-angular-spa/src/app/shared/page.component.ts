@@ -12,6 +12,9 @@ import { Component, input, InputSignal } from "@angular/core";
       <main>
         <ng-content />
       </main>
+      <footer>
+        <ng-content select="footer" />
+      </footer>
     </article>
   `,
 })
