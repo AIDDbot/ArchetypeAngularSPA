@@ -7,9 +7,7 @@ import { Portfolio } from "../../shared/models/portfolio.type";
 })
 export class HomeStoreService {
   private readonly portfolioUrl = "http://localhost:3000/portfolio";
-  private readonly portfolioResource = httpResource<Portfolio>(
+  public readonly portfolioResource = httpResource<Portfolio>(
     () => this.portfolioUrl
   );
-  public portfolio = this.portfolioResource.value.asReadonly();
-  public portfolioStatus = this.portfolioResource.status;
 }

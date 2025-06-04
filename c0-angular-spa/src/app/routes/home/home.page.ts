@@ -1,26 +1,22 @@
-import { JsonPipe } from "@angular/common";
-import { Component, inject, Signal, signal } from "@angular/core";
+import { Component, computed, inject, Signal, signal } from "@angular/core";
 import { ENV } from "../../shared/env/env.token";
 import type { Env } from "../../shared/env/env.type";
-import { ErrorComponent } from "../../shared/error.component";
 import { PageComponent } from "../../shared/page.component";
-import { WaitingComponent } from "../../shared/waiting.component";
+import { ResourceComponent } from "../../shared/resource.component";
+import { HomeComponent } from "./home.component";
 import { HomeStoreService } from "./home.store.service";
 
 @Component({
-  imports: [PageComponent, JsonPipe, WaitingComponent, ErrorComponent],
+  imports: [PageComponent, ResourceComponent, HomeComponent],
   template: `
     <app-page [title]="title()">
-      <h1>Portfolio</h1>
-      @if (portfolioStatus() === "loading") {
-        <app-waiting />
-      }
-      @if (portfolioStatus() === "error") {
-        <app-error />
-      }
-      @defer (when portfolioStatus() === "resolved") {
-        <pre>{{ portfolio() | json }}</pre>
-      }
+      <h2>Your Portfolio</h2>
+      <app-resource [resource]="portfolioResource">
+        <app-home [portfolio]="portfolioResource.value()!"></app-home>
+      </app-resource>
+      <footer>
+        <p>Last updated: {{ lastUpdated() }}</p>
+      </footer>
     </app-page>
   `,
 })
@@ -28,6 +24,8 @@ export default class HomePage {
   private readonly homeStore = inject(HomeStoreService);
   private readonly env: Env = inject(ENV);
   protected title: Signal<string> = signal(this.env.name);
-  protected portfolio = this.homeStore.portfolio;
-  protected portfolioStatus = this.homeStore.portfolioStatus;
+  protected portfolioResource = this.homeStore.portfolioResource;
+  protected lastUpdated = computed(
+    () => this.portfolioResource.value()?.lastUpdated
+  );
 }
