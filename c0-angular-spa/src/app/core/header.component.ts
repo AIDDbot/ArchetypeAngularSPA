@@ -12,7 +12,9 @@ import { ThemeToggleComponent } from "./theme-toggle.component";
     <header>
       <nav>
         <ul>
-          <a [routerLink]="['']">Home</a>
+          <li>
+            <a [routerLink]="['']"><strong>Assets Board</strong></a>
+          </li>
         </ul>
         <ul>
           @if (isLoggedIn()) {
