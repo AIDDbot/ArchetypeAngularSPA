@@ -47,3 +47,14 @@ header nav ul li strong {
 span {
   padding-right: 1%;
 }
+
+dt {
+  display: inline;
+  font-weight: bold;
+}
+dd {
+  display: inline;
+  margin-left: 0.5rem;
+  padding-right: 1rem
+}
+

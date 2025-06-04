@@ -3,11 +3,12 @@ import { RouterLink } from "@angular/router";
 import { ENV } from "../shared/env/env.token";
 import { Env } from "../shared/env/env.type";
 import { GlobalStore } from "../shared/global/global.store";
+import { PortfolioSummaryComponent } from "../shared/portfolio-summary.component";
 import { ThemeToggleComponent } from "./theme-toggle.component";
 
 @Component({
   selector: "app-header",
-  imports: [ThemeToggleComponent, RouterLink],
+  imports: [ThemeToggleComponent, RouterLink, PortfolioSummaryComponent],
   template: `
     <header>
       <nav>
@@ -20,6 +21,9 @@ import { ThemeToggleComponent } from "./theme-toggle.component";
           @if (isLoggedIn()) {
             <li>
               <a [routerLink]="['user', user()]">User</a>
+            </li>
+            <li>
+              <app-portfolio-summary />
             </li>
           } @else {
             <li>
