@@ -1,6 +1,6 @@
 import { CurrencyPipe, DecimalPipe } from "@angular/common";
-import { Component, inject } from "@angular/core";
-import { PortfolioStore } from "../../shared/portfolio.store";
+import { Component, input } from "@angular/core";
+import { Portfolio } from "../../shared/models/portfolio.type";
 @Component({
   selector: "app-home",
   imports: [CurrencyPipe, DecimalPipe],
@@ -23,6 +23,7 @@ import { PortfolioStore } from "../../shared/portfolio.store";
               <th>Name</th>
               <th style="text-align: right">Quantity</th>
               <th style="text-align: right">Price</th>
+              <th style="text-align: right">Value</th>
             </tr>
           </thead>
           <tbody>
@@ -35,14 +36,17 @@ import { PortfolioStore } from "../../shared/portfolio.store";
                 <td style="text-align: right">
                   {{ asset.price | currency }}
                 </td>
+                <td style="text-align: right">
+                  {{ asset.price * asset.quantity | currency }}
+                </td>
               </tr>
             }
           </tbody>
           <tfoot>
             <tr>
-              <td colspan="2">Total</td>
+              <td colspan="3">Total</td>
               <td style="text-align: right">
-                {{ netValue() | currency }}
+                {{ assetsValue() | currency }}
               </td>
             </tr>
           </tfoot>
@@ -52,8 +56,11 @@ import { PortfolioStore } from "../../shared/portfolio.store";
   `,
 })
 export class HomeComponent {
-  private readonly portfolioStore = inject(PortfolioStore);
-  protected portfolio = this.portfolioStore.portfolio;
-  protected assetsValue = this.portfolioStore.assetsValue;
-  protected netValue = this.portfolioStore.netValue;
+  // private readonly portfolioStore = inject(PortfolioStore);
+  // protected portfolio = this.portfolioStore.portfolio;
+  // protected assetsValue = this.portfolioStore.assetsValue;
+  // protected netValue = this.portfolioStore.netValue;
+  public portfolio = input.required<Portfolio>();
+  public assetsValue = input.required<number>();
+  public netValue = input.required<number>();
 }
