@@ -13,7 +13,7 @@ import { Portfolio } from "../../shared/models/portfolio.type";
           <dt>Cash</dt>
           <dd>{{ portfolio().cash | currency }}</dd>
           <dt>Assets Value</dt>
-          <dd>{{ assetsValue() | currency }}</dd>
+          <dd property="totalAssetsValue">{{ assetsValue() | currency }}</dd>
         </dl>
       </header>
       <main>
@@ -45,7 +45,7 @@ import { Portfolio } from "../../shared/models/portfolio.type";
           <tfoot>
             <tr>
               <td colspan="3">Total</td>
-              <td style="text-align: right">
+              <td style="text-align: right" property="totalAssetsValue">
                 {{ assetsValue() | currency }}
               </td>
             </tr>
