@@ -27,17 +27,17 @@ import { Portfolio } from "../../shared/models/portfolio.type";
             </tr>
           </thead>
           <tbody>
-            @for (asset of portfolio().assets; track asset.id) {
+            @for (asset of portfolio().assets; track asset.symbol) {
               <tr>
-                <td>{{ asset.name }}</td>
+                <td>{{ asset.symbol }}</td>
                 <td style="text-align: right">
-                  {{ asset.quantity | number: "1.2-2" }}
+                  {{ asset.units | number: "1.2-2" }}
                 </td>
                 <td style="text-align: right">
-                  {{ asset.price | currency }}
+                  {{ asset.average_price | currency }}
                 </td>
                 <td style="text-align: right">
-                  {{ asset.price * asset.quantity | currency }}
+                  {{ asset.average_price * asset.units | currency }}
                 </td>
               </tr>
             }
