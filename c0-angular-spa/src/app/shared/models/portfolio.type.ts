@@ -2,16 +2,20 @@ import { Asset } from "./asset.type";
 
 export type Portfolio = {
   id: string;
-  userId: string;
+  user_id: string;
+  name: string;
+  initial_cash: number;
   cash: number;
   assets: Asset[];
-  lastUpdated: Date;
+  lastUpdated: string;
 };
 
 export const DEFAULT_PORTFOLIO: Portfolio = {
   id: "",
-  userId: "",
+  user_id: "",
+  name: "",
+  initial_cash: 0,
   cash: 0,
   assets: [],
-  lastUpdated: new Date(),
+  lastUpdated: new Date().toISOString(),
 };
