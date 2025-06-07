@@ -1,5 +1,12 @@
 import { HttpClient, httpResource } from "@angular/common/http";
-import { computed, effect, inject, Injectable, signal } from "@angular/core";
+import {
+  computed,
+  effect,
+  inject,
+  Injectable,
+  ResourceStatus,
+  signal,
+} from "@angular/core";
 import { CreateTransactionDto } from "./models/create-transaction.dto";
 import { DEFAULT_PORTFOLIO, Portfolio } from "./models/portfolio.type";
 
@@ -30,7 +37,24 @@ export class PortfolioStore {
     });
   }
 
+  public addAssetResource = {
+    value: signal<unknown>(null),
+    status: signal<ResourceStatus>("idle"),
+    error: signal<Error | undefined>(undefined),
+    isLoading: signal<boolean>(false),
+  };
+
+  public addAssetErrorMessage = computed(() => {
+    const error = this.addAssetResource.error();
+    if (error) {
+      return error.message;
+    }
+    return "";
+  });
+
   public addAsset(transaction: CreateTransactionDto): void {
+    this.addAssetResource.status.set("loading");
+    this.addAssetResource.error.set(undefined);
     this.http
       .post<Portfolio>(
         `${this.url}/${this.portfolio().id}/transactions`,
@@ -39,6 +63,16 @@ export class PortfolioStore {
       .subscribe({
         next: () => {
           this.getResource.reload();
+          this.addAssetResource.status.set("resolved");
+        },
+        error: (error) => {
+          const bodyError = (error as any).error;
+          if (bodyError) {
+            this.addAssetResource.error.set(bodyError);
+          } else {
+            this.addAssetResource.error.set(error);
+          }
+          this.addAssetResource.status.set("error");
         },
       });
   }

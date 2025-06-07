@@ -9,11 +9,11 @@ import { Portfolio } from "../../shared/models/portfolio.type";
     <article>
       <header>
         <dl>
-          <dt>Net Value</dt>
+          <dt>Net Value:</dt>
           <dd>{{ netValue() | currency }}</dd>
-          <dt>Cash</dt>
+          <dt>Cash:</dt>
           <dd>{{ portfolio().cash | currency }}</dd>
-          <dt>Assets Value</dt>
+          <dt>Assets Value:</dt>
           <dd property="totalAssetsValue">{{ assetsValue() | currency }}</dd>
         </dl>
       </header>
@@ -54,9 +54,9 @@ import { Portfolio } from "../../shared/models/portfolio.type";
             </tfoot>
           </table>
         } @else {
-          <p>No assets in portfolio</p>
-          <a routerLink="/assets/add-new">Add new asset</a>
+          <h3>No assets yet in your portfolio</h3>
         }
+        <a [routerLink]="['assets', 'add-new']">Add new asset</a>
       </main>
     </article>
   `,
