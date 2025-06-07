@@ -1,30 +1,23 @@
-import { JsonPipe } from "@angular/common";
-import { httpResource } from "@angular/common/http";
 import { Component, computed, inject } from "@angular/core";
 import { Portfolio } from "../../shared/models/portfolio.type";
 import { PageComponent } from "../../shared/page.component";
 import { PortfolioStore } from "../../shared/portfolio.store";
 import { ResourceComponent } from "../../shared/resource.component";
-import { HomeComponent } from "./home.component";
+import { PortfolioComponent } from "./portfolio.component";
 import { PortfolioFormComponent } from "./portfolio.form";
 
 @Component({
   imports: [
     PageComponent,
     ResourceComponent,
-    HomeComponent,
+    PortfolioComponent,
     PortfolioFormComponent,
-    JsonPipe,
   ],
   template: `
     <app-page title="Your Portfolio">
-      <pre>Value: {{ portfolioResource.value() | json }}</pre>
-      <pre>Status: {{ portfolioResource.status() | json }}</pre>
-      <pre>Error: {{ portfolioResource.error() | json }}</pre>
-
-      <app-resource [resource]="portfolioResource">
+      <app-resource [resource]="getPortfolioResource">
         @if (portfolio().id) {
-          <app-home
+          <app-portfolio
             [portfolio]="portfolio()"
             [netValue]="netValue()"
             [assetsValue]="assetsValue()"
@@ -42,9 +35,7 @@ import { PortfolioFormComponent } from "./portfolio.form";
 export default class HomePage {
   //private readonly homeStore = inject(HomeStoreService);
   private readonly portfolioStore = inject(PortfolioStore);
-  protected portfolioResource = httpResource<Portfolio[]>(
-    () => "http://localhost:3000/portfolios"
-  );
+  protected getPortfolioResource = this.portfolioStore.getResource;
   protected portfolio = this.portfolioStore.portfolio;
   protected assetsValue = this.portfolioStore.assetsValue;
   protected netValue = this.portfolioStore.netValue;

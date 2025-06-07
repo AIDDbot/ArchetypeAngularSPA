@@ -1,5 +1,6 @@
 import { HttpClient, httpResource } from "@angular/common/http";
-import { computed, inject, Injectable, signal } from "@angular/core";
+import { computed, effect, inject, Injectable, signal } from "@angular/core";
+import { CreateTransactionDto } from "./models/create-transaction.dto";
 import { DEFAULT_PORTFOLIO, Portfolio } from "./models/portfolio.type";
 
 @Injectable({
@@ -9,7 +10,7 @@ export class PortfolioStore {
   private readonly url = "http://localhost:3000/portfolios";
   private http = inject(HttpClient);
   private readonly state = signal<Portfolio>(DEFAULT_PORTFOLIO);
-  public readonly resource = httpResource<Portfolio[]>(() => this.url);
+  public readonly getResource = httpResource<Portfolio[]>(() => this.url);
 
   public readonly portfolio = computed(() => this.state());
   public assetsValue = computed(() =>
@@ -29,10 +30,23 @@ export class PortfolioStore {
     });
   }
 
+  public addAsset(transaction: CreateTransactionDto): void {
+    this.http
+      .post<Portfolio>(
+        `${this.url}/${this.portfolio().id}/transactions`,
+        transaction
+      )
+      .subscribe({
+        next: () => {
+          this.getResource.reload();
+        },
+      });
+  }
+
   public netValue = computed(() => this.portfolio().cash + this.assetsValue());
 
-  /* private onResourceValue = effect(() => {
-    const portfolios = this.resource.value();
+  private onResourceValue = effect(() => {
+    const portfolios = this.getResource.value();
     if (portfolios) {
       const portfolio = portfolios[0];
       if (portfolio) {
@@ -42,9 +56,9 @@ export class PortfolioStore {
   });
 
   private onResourceError = effect(() => {
-    const error = this.resource.error();
+    const error = this.getResource.error();
     if (error) {
       console.error(error);
     }
-  }); */
+  });
 }

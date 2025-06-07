@@ -1,4 +1,3 @@
-import { JsonPipe } from "@angular/common";
 import {
   Component,
   computed,
@@ -11,15 +10,12 @@ import { WaitingComponent } from "./waiting.component";
 
 @Component({
   selector: "app-resource",
-  imports: [WaitingComponent, ErrorComponent, JsonPipe],
+  imports: [WaitingComponent, ErrorComponent],
   template: `
-    <pre>Value: {{ resource().value() | json }}</pre>
-    <pre>Status: {{ resource().status() | json }}</pre>
-    <pre>Error: {{ resource().error() | json }}</pre>
     @if (resource().isLoading()) {
       <app-waiting />
     } @else if (resource().error()) {
-      <app-error [message]="error()" />
+      <app-error [message]="errorMessage()" />
     } @else {
       <ng-content />
     }
@@ -29,7 +25,7 @@ export class ResourceComponent {
   public resource: InputSignal<ResourceRef<any>> =
     input.required<ResourceRef<any>>();
   protected status = computed(() => this.resource().status());
-  protected error = computed(() => {
+  protected errorMessage = computed(() => {
     const error = this.resource().error();
     if (error) {
       return error.message;
