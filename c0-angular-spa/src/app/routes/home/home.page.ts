@@ -1,14 +1,27 @@
 import { JsonPipe } from "@angular/common";
+import { httpResource } from "@angular/common/http";
 import { Component, computed, inject } from "@angular/core";
+import { Portfolio } from "../../shared/models/portfolio.type";
 import { PageComponent } from "../../shared/page.component";
 import { PortfolioStore } from "../../shared/portfolio.store";
 import { ResourceComponent } from "../../shared/resource.component";
 import { HomeComponent } from "./home.component";
+import { PortfolioFormComponent } from "./portfolio.form";
 
 @Component({
-  imports: [PageComponent, ResourceComponent, HomeComponent, JsonPipe],
+  imports: [
+    PageComponent,
+    ResourceComponent,
+    HomeComponent,
+    PortfolioFormComponent,
+    JsonPipe,
+  ],
   template: `
     <app-page title="Your Portfolio">
+      <pre>Value: {{ portfolioResource.value() | json }}</pre>
+      <pre>Status: {{ portfolioResource.status() | json }}</pre>
+      <pre>Error: {{ portfolioResource.error() | json }}</pre>
+
       <app-resource [resource]="portfolioResource">
         @if (portfolio().id) {
           <app-home
@@ -17,13 +30,7 @@ import { HomeComponent } from "./home.component";
             [assetsValue]="assetsValue()"
           />
         } @else {
-          <form>
-            <label for="initial_cash">Initial Cash</label>
-            <input type="number" name="initial_cash" />
-            <label for="name">Name</label>
-            <input type="text" name="name" />
-            <button type="button" (click)="createPortfolio()">Create</button>
-          </form>
+          <app-portfolio-form (save)="createPortfolio($event)" />
         }
       </app-resource>
       <footer>
@@ -35,19 +42,15 @@ import { HomeComponent } from "./home.component";
 export default class HomePage {
   //private readonly homeStore = inject(HomeStoreService);
   private readonly portfolioStore = inject(PortfolioStore);
-  protected portfolioResource = this.portfolioStore.resource;
+  protected portfolioResource = httpResource<Portfolio[]>(
+    () => "http://localhost:3000/portfolios"
+  );
   protected portfolio = this.portfolioStore.portfolio;
   protected assetsValue = this.portfolioStore.assetsValue;
   protected netValue = this.portfolioStore.netValue;
   protected lastUpdated = computed(() => this.portfolio()?.lastUpdated);
 
-  protected createPortfolio(): void {
-    this.portfolioStore.updatePortfolio({
-      ...this.portfolio(),
-      id: "1",
-      name: "Portfolio 1",
-      initial_cash: 1000,
-      cash: 1000,
-    });
+  protected createPortfolio(portfolio: Portfolio): void {
+    this.portfolioStore.updatePortfolio(portfolio);
   }
 }

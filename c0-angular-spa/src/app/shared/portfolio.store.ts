@@ -1,5 +1,5 @@
 import { HttpClient, httpResource } from "@angular/common/http";
-import { computed, effect, inject, Injectable, signal } from "@angular/core";
+import { computed, inject, Injectable, signal } from "@angular/core";
 import { DEFAULT_PORTFOLIO, Portfolio } from "./models/portfolio.type";
 
 @Injectable({
@@ -31,7 +31,7 @@ export class PortfolioStore {
 
   public netValue = computed(() => this.portfolio().cash + this.assetsValue());
 
-  private onResourceValue = effect(() => {
+  /* private onResourceValue = effect(() => {
     const portfolios = this.resource.value();
     if (portfolios) {
       const portfolio = portfolios[0];
@@ -40,4 +40,11 @@ export class PortfolioStore {
       }
     }
   });
+
+  private onResourceError = effect(() => {
+    const error = this.resource.error();
+    if (error) {
+      console.error(error);
+    }
+  }); */
 }
