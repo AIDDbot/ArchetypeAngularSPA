@@ -1,22 +1,22 @@
-import { httpResource } from "@angular/common/http";
-import { effect, inject, Injectable } from "@angular/core";
-import { Portfolio } from "../../shared/models/portfolio.type";
-import { PortfolioStore } from "../../shared/portfolio.store";
+import { Injectable } from "@angular/core";
 
 @Injectable({
   providedIn: "root",
 })
 export class HomeStoreService {
-  private readonly portfolioStore = inject(PortfolioStore);
-  private readonly portfolioUrl = "http://localhost:3000/portfolio";
-  public readonly portfolioResource = httpResource<Portfolio>(
+  /* private readonly portfolioStore = inject(PortfolioStore);
+  private readonly portfolioUrl = "http://localhost:3000/portfolios";
+  public readonly portfolioResource = httpResource<Portfolio[]>(
     () => this.portfolioUrl
   );
 
   private onResourceValue = effect(() => {
-    const portfolio = this.portfolioResource.value();
-    if (portfolio) {
-      this.portfolioStore.updatePortfolio(portfolio);
+    const portfolios = this.portfolioResource.value();
+    if (portfolios) {
+      const portfolio = portfolios[0];
+      if (portfolio) {
+        this.portfolioStore.updatePortfolio(portfolio);
+      }
     }
-  });
+  }); */
 }
