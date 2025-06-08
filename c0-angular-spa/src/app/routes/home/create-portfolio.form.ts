@@ -3,7 +3,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
 import { Portfolio } from "../../shared/models/portfolio.type";
 
 @Component({
-  selector: "app-portfolio-form",
+  selector: "app-create-portfolio-form",
   imports: [ReactiveFormsModule],
   template: `
     <form [formGroup]="form">
@@ -21,7 +21,7 @@ import { Portfolio } from "../../shared/models/portfolio.type";
     </form>
   `,
 })
-export class PortfolioFormComponent {
+export class CreatePortfolioFormComponent {
   protected form = new FormGroup({
     initial_cash: new FormControl(0),
     name: new FormControl(""),

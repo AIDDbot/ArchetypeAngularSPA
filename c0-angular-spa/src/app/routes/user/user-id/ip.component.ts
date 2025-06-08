@@ -1,6 +1,6 @@
 import { JsonPipe } from "@angular/common";
 import { Component, input, InputSignal } from "@angular/core";
-import { IpApi } from "../../home/ip-api.type";
+import { IpApi } from "./ip-api.type";
 
 @Component({
   selector: "app-ip",

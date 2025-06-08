@@ -3,7 +3,7 @@ import {
   computed,
   input,
   InputSignal,
-  ResourceRef,
+  Resource,
 } from "@angular/core";
 import { ErrorComponent } from "./error.component";
 import { WaitingComponent } from "./waiting.component";
@@ -22,8 +22,7 @@ import { WaitingComponent } from "./waiting.component";
   `,
 })
 export class ResourceComponent {
-  public resource: InputSignal<ResourceRef<any>> =
-    input.required<ResourceRef<any>>();
+  public resource: InputSignal<Resource<any>> = input.required<Resource<any>>();
   protected status = computed(() => this.resource().status());
   protected errorMessage = computed(() => {
     const error = this.resource().error();

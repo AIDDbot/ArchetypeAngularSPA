@@ -10,7 +10,7 @@ import { Router } from "@angular/router";
 import { ErrorComponent } from "../../../shared/error.component";
 import { PageComponent } from "../../../shared/page.component";
 import { WaitingComponent } from "../../../shared/waiting.component";
-import { IpApi } from "../../home/ip-api.type";
+import { IpApi } from "./ip-api.type";
 import { IpComponent } from "./ip.component";
 import { UserStore } from "./user.store";
 

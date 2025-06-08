@@ -11,7 +11,7 @@ export const routes: Routes = [
       import("./routes/user/user.routes").then((m) => m.USER_ROUTES),
   },
   {
-    path: "assets/add-new",
-    loadComponent: () => import("./routes/assets/add-new/add-new-asset.page"),
+    path: "assets/buy",
+    loadComponent: () => import("./routes/assets/buy/buy-asset.page"),
   },
 ];

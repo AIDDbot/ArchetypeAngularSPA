@@ -8,7 +8,7 @@ import {
   Signal,
 } from "@angular/core";
 import { GlobalStore } from "../../../shared/global/global.store";
-import { IpApi } from "../../home/ip-api.type";
+import { IpApi } from "./ip-api.type";
 
 @Injectable({
   providedIn: "root",

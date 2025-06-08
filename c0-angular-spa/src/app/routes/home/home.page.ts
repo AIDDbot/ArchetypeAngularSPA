@@ -1,17 +1,19 @@
-import { Component, computed, inject } from "@angular/core";
+import { Component, computed, effect, inject } from "@angular/core";
 import { Portfolio } from "../../shared/models/portfolio.type";
 import { PageComponent } from "../../shared/page.component";
 import { PortfolioStore } from "../../shared/portfolio.store";
 import { ResourceComponent } from "../../shared/resource.component";
+import { CreatePortfolioFormComponent } from "./create-portfolio.form";
+import { CreatePortfolioService } from "./create-portfolio.service";
+import { LoadPortfolioService } from "./load-portfolio.service";
 import { PortfolioComponent } from "./portfolio.component";
-import { PortfolioFormComponent } from "./portfolio.form";
 
 @Component({
   imports: [
     PageComponent,
     ResourceComponent,
     PortfolioComponent,
-    PortfolioFormComponent,
+    CreatePortfolioFormComponent,
   ],
   template: `
     <app-page title="Your Portfolio">
@@ -23,7 +25,7 @@ import { PortfolioFormComponent } from "./portfolio.form";
             [assetsValue]="assetsValue()"
           />
         } @else {
-          <app-portfolio-form (save)="createPortfolio($event)" />
+          <app-create-portfolio-form (save)="createPortfolio($event)" />
         }
       </app-resource>
       <footer>
@@ -33,15 +35,32 @@ import { PortfolioFormComponent } from "./portfolio.form";
   `,
 })
 export default class HomePage {
-  //private readonly homeStore = inject(HomeStoreService);
   private readonly portfolioStore = inject(PortfolioStore);
-  protected getPortfolioResource = this.portfolioStore.getResource;
+  private readonly createPortfolioService = inject(CreatePortfolioService);
+  private readonly loadPortfolioService = inject(LoadPortfolioService);
+  protected getPortfolioResource = this.loadPortfolioService;
   protected portfolio = this.portfolioStore.portfolio;
   protected assetsValue = this.portfolioStore.assetsValue;
   protected netValue = this.portfolioStore.netValue;
   protected lastUpdated = computed(() => this.portfolio()?.lastUpdated);
 
   protected createPortfolio(portfolio: Portfolio): void {
-    this.portfolioStore.updatePortfolio(portfolio);
+    this.createPortfolioService.createPortfolio(portfolio);
   }
+  constructor() {
+    this.loadPortfolioService.loadPortfolio();
+  }
+
+  private onCreatePortfolioResourceStatus = effect(() => {
+    if (this.createPortfolioService.status() === "resolved") {
+      this.createPortfolioService.status.set("idle");
+      this.loadPortfolioService.loadPortfolio();
+    }
+  });
+
+  private onLoadPortfolioResourceStatus = effect(() => {
+    if (this.loadPortfolioService.status() === "resolved") {
+      this.portfolioStore.setState(this.loadPortfolioService.value());
+    }
+  });
 }
