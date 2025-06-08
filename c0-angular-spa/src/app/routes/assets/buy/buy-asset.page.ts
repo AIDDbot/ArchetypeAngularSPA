@@ -31,6 +31,7 @@ export default class BuyAssetPage {
   private onBuyAssetResourceStatus = effect(() => {
     if (this.buyAssetResource.status() === "resolved") {
       this.buyAssetResource.status.set("idle");
+      // alternatively reload portfolio, and keep the same route
       this.router.navigate(["/"]);
     }
   });

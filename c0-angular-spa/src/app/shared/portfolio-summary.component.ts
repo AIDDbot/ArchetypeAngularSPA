@@ -5,9 +5,12 @@ import { PortfolioStore } from "./portfolio.store";
 @Component({
   selector: "app-portfolio-summary",
   imports: [CurrencyPipe],
-  template: `{{ portfolioValue() | currency }}`,
+  template: `Assets:{{ assetsValue() | currency }} Cash:{{
+      cash() | currency
+    }}`,
 })
 export class PortfolioSummaryComponent {
   private readonly portfolioStore = inject(PortfolioStore);
-  protected portfolioValue = computed(() => this.portfolioStore.netValue());
+  protected assetsValue = computed(() => this.portfolioStore.assetsValue());
+  protected cash = computed(() => this.portfolioStore.cash());
 }

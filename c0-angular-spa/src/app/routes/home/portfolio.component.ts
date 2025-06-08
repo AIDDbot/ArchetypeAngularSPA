@@ -56,7 +56,7 @@ import { Portfolio } from "../../shared/models/portfolio.type";
         } @else {
           <h3>No assets yet in your portfolio</h3>
         }
-        <a [routerLink]="['assets', 'add-new']">Add new asset</a>
+        <a [routerLink]="['assets', 'buy']">Add new asset</a>
       </main>
     </article>
   `,

@@ -21,4 +21,6 @@ export class PortfolioStore {
   );
 
   public netValue = computed(() => this.portfolio().cash + this.assetsValue());
+
+  public cash = computed(() => this.portfolio().cash);
 }

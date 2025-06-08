@@ -29,6 +29,7 @@ export class CreatePortfolioService implements Resource<Portfolio> {
     this.http.post<Portfolio>(`${this.url}`, portfolio).subscribe({
       next: (portfolio) => {
         this.value.set(portfolio);
+        this.status.set("resolved");
       },
       error: (error) => {
         const bodyError = (error as any).error;
