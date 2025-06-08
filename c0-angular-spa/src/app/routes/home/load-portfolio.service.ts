@@ -5,9 +5,7 @@ import {
   Portfolio,
 } from "../../shared/models/portfolio.type";
 
-@Injectable({
-  providedIn: "root",
-})
+@Injectable()
 export class LoadPortfolioService implements Resource<Portfolio> {
   private readonly url = "http://localhost:3000/portfolios";
   private readonly getResource = httpResource<Portfolio[]>(() => this.url);

@@ -15,9 +15,7 @@ import {
 } from "../../../shared/models/portfolio.type";
 import { PortfolioStore } from "../../../shared/portfolio.store";
 
-@Injectable({
-  providedIn: "root",
-})
+@Injectable()
 export class BuyAssetService implements Resource<Portfolio> {
   private readonly portfolioStore = inject(PortfolioStore);
   private readonly url = "http://localhost:3000/portfolios";

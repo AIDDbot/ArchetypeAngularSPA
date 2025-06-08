@@ -9,6 +9,7 @@ import { LoadPortfolioService } from "./load-portfolio.service";
 import { PortfolioComponent } from "./portfolio.component";
 
 @Component({
+  providers: [LoadPortfolioService, CreatePortfolioService],
   imports: [
     PageComponent,
     ResourceComponent,
