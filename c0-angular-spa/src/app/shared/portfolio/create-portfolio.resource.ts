@@ -6,13 +6,14 @@ import {
   ResourceStatus,
   signal,
 } from "@angular/core";
+import { PortfolioStore } from "./portfolio.store";
 import { DEFAULT_PORTFOLIO, Portfolio } from "./portfolio.type";
 
 @Injectable()
-export class CreatePortfolioService implements Resource<Portfolio> {
+export class CreatePortfolioResource implements Resource<Portfolio> {
   private readonly url = "http://localhost:3000/portfolios";
   private http = inject(HttpClient);
-
+  private readonly portfolioStore = inject(PortfolioStore);
   // Resource interface
   public value = signal<Portfolio>(DEFAULT_PORTFOLIO);
   public status = signal<ResourceStatus>("idle");
@@ -27,6 +28,7 @@ export class CreatePortfolioService implements Resource<Portfolio> {
       next: (portfolio) => {
         this.value.set(portfolio);
         this.status.set("resolved");
+        this.portfolioStore.setState(portfolio);
       },
       error: (httpError) => {
         const bodyError = (httpError as any).error;

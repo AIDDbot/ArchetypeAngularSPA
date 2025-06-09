@@ -9,17 +9,17 @@ import {
 import { HttpClient } from "@angular/common/http";
 
 import { CreateTransactionDto } from "./create-transaction.dto";
-import { DEFAULT_PORTFOLIO, Portfolio } from "./portfolio.type";
+import { DEFAULT_TRANSACTION, Transaction } from "./transaction.type";
 
 @Injectable()
-export class BuyAssetService implements Resource<Portfolio> {
+export class BuyAssetResource implements Resource<Transaction> {
   private readonly url = "http://localhost:3000/portfolios";
   private http = inject(HttpClient);
-  public value = signal<Portfolio>(DEFAULT_PORTFOLIO);
+  public value = signal<Transaction>(DEFAULT_TRANSACTION);
   public status = signal<ResourceStatus>("idle");
   public error = signal<Error | undefined>(undefined);
   public isLoading = signal<boolean>(false);
-  public hasValue = (): this is Resource<Portfolio> => true;
+  public hasValue = (): this is Resource<Transaction> => true;
   public buyAsset(
     portfolioId: string,
     transaction: CreateTransactionDto
@@ -27,7 +27,7 @@ export class BuyAssetService implements Resource<Portfolio> {
     this.status.set("loading");
     this.error.set(undefined);
     this.http
-      .post<Portfolio>(`${this.url}/${portfolioId}/transactions`, transaction)
+      .post<Transaction>(`${this.url}/${portfolioId}/transactions`, transaction)
       .subscribe({
         next: () => {
           this.status.set("resolved");

@@ -49,6 +49,7 @@
     "*.page.ts": "angular-guard",
     "*.singleton.ts": "stitches",
     "*.repository.ts": "database",
+    "*.resource.ts": "angular-service",
     "*.service.ts": "angular-service",
     "*.store.ts": "angular-service",
     "*.type.ts": "raml",
