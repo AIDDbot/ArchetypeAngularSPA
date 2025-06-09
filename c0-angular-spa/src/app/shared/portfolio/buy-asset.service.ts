@@ -8,12 +8,10 @@ import {
 } from "@angular/core";
 
 import { HttpClient } from "@angular/common/http";
-import { CreateTransactionDto } from "../../../shared/models/create-transaction.dto";
-import {
-  DEFAULT_PORTFOLIO,
-  Portfolio,
-} from "../../../shared/models/portfolio.type";
-import { PortfolioStore } from "../../../shared/portfolio.store";
+
+import { CreateTransactionDto } from "./create-transaction.dto";
+import { PortfolioStore } from "./portfolio.store";
+import { DEFAULT_PORTFOLIO, Portfolio } from "./portfolio.type";
 
 @Injectable()
 export class BuyAssetService implements Resource<Portfolio> {
@@ -34,6 +32,7 @@ export class BuyAssetService implements Resource<Portfolio> {
       .subscribe({
         next: () => {
           // reload portfolio
+          // this.portfolioStore.buyAsset(transaction);
           this.status.set("resolved");
         },
         error: (error) => {

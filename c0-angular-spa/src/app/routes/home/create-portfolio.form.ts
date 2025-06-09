@@ -1,6 +1,6 @@
 import { Component, output } from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
-import { Portfolio } from "../../shared/models/portfolio.type";
+import { Portfolio } from "../../shared/portfolio/portfolio.type";
 
 @Component({
   selector: "app-create-portfolio-form",

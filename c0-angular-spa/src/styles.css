@@ -50,9 +50,9 @@ span {
 
 dt {
   display: inline;
-  font-weight: bold;
 }
 dd {
+  font-weight: bold;
   display: inline;
   margin-left: 0.5rem;
   padding-right: 1rem

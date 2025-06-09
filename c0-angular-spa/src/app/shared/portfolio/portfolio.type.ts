@@ -1,4 +1,4 @@
-import { Asset } from "./asset.type";
+import { Asset } from "../portfolio/asset.type";
 
 export type Portfolio = {
   id: string;

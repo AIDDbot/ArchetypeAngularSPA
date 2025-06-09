@@ -5,9 +5,14 @@ import { PortfolioStore } from "./portfolio.store";
 @Component({
   selector: "app-portfolio-summary",
   imports: [CurrencyPipe],
-  template: `Assets:{{ assetsValue() | currency }} Cash:{{
-      cash() | currency
-    }}`,
+  template: `
+    <dl style="margin-bottom: 0">
+      <dt>Assets:</dt>
+      <dd>{{ assetsValue() | currency }}</dd>
+      <dt>Cash:</dt>
+      <dd>{{ cash() | currency }}</dd>
+    </dl>
+  `,
 })
 export class PortfolioSummaryComponent {
   private readonly portfolioStore = inject(PortfolioStore);

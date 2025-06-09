@@ -1,4 +1,4 @@
-import type { AssetType } from "./asset.type";
+import type { AssetType } from "../portfolio/asset.type";
 import { TransactionType } from "./transaction.type";
 
 export type CreateTransactionDto = {

@@ -5,7 +5,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from "@angular/forms";
-import { CreateTransactionDto } from "../../../shared/models/create-transaction.dto";
+import { CreateTransactionDto } from "../../../shared/portfolio/create-transaction.dto";
 
 @Component({
   selector: "app-buy-asset-form",

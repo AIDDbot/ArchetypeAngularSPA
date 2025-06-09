@@ -1,11 +1,11 @@
 import { Component, computed, effect, inject } from "@angular/core";
-import { Portfolio } from "../../shared/models/portfolio.type";
 import { PageComponent } from "../../shared/page.component";
-import { PortfolioStore } from "../../shared/portfolio.store";
+import { CreatePortfolioService } from "../../shared/portfolio/create-portfolio.service";
+import { LoadPortfolioService } from "../../shared/portfolio/load-portfolio.service";
+import { PortfolioStore } from "../../shared/portfolio/portfolio.store";
+import { Portfolio } from "../../shared/portfolio/portfolio.type";
 import { ResourceComponent } from "../../shared/resource.component";
 import { CreatePortfolioFormComponent } from "./create-portfolio.form";
-import { CreatePortfolioService } from "./create-portfolio.service";
-import { LoadPortfolioService } from "./load-portfolio.service";
 import { PortfolioComponent } from "./portfolio.component";
 
 @Component({
@@ -48,7 +48,9 @@ export default class HomePage {
   protected createPortfolio(portfolio: Portfolio): void {
     this.createPortfolioService.createPortfolio(portfolio);
   }
+
   constructor() {
+    // ? Why do we need to load the portfolio here?
     this.loadPortfolioService.loadPortfolio();
   }
 

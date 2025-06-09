@@ -1,4 +1,4 @@
-import { AssetType } from "./asset.type";
+import { AssetType } from "../portfolio/asset.type";
 
 export type TransactionType = "buy" | "sell";
 

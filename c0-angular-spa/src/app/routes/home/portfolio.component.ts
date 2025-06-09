@@ -1,7 +1,7 @@
 import { CurrencyPipe, DecimalPipe } from "@angular/common";
 import { Component, input } from "@angular/core";
 import { RouterLink } from "@angular/router";
-import { Portfolio } from "../../shared/models/portfolio.type";
+import { Portfolio } from "../../shared/portfolio/portfolio.type";
 @Component({
   selector: "app-portfolio",
   imports: [CurrencyPipe, DecimalPipe, RouterLink],

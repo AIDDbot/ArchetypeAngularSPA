@@ -1,9 +1,6 @@
 import { httpResource } from "@angular/common/http";
 import { computed, Injectable, Resource } from "@angular/core";
-import {
-  DEFAULT_PORTFOLIO,
-  Portfolio,
-} from "../../shared/models/portfolio.type";
+import { DEFAULT_PORTFOLIO, Portfolio } from "./portfolio.type";
 
 @Injectable()
 export class LoadPortfolioService implements Resource<Portfolio> {

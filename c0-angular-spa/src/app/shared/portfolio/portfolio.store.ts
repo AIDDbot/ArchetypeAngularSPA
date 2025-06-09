@@ -1,5 +1,5 @@
 import { computed, Injectable, signal } from "@angular/core";
-import { DEFAULT_PORTFOLIO, Portfolio } from "./models/portfolio.type";
+import { DEFAULT_PORTFOLIO, Portfolio } from "./portfolio.type";
 
 @Injectable({
   providedIn: "root",
