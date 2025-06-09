@@ -49,21 +49,10 @@ export default class HomePage {
     this.createPortfolioService.createPortfolio(portfolio);
   }
 
-  constructor() {
-    // ? Why do we need to load the portfolio here?
-    this.loadPortfolioService.loadPortfolio();
-  }
-
   private onCreatePortfolioResourceStatus = effect(() => {
     if (this.createPortfolioService.status() === "resolved") {
       this.createPortfolioService.status.set("idle");
       this.loadPortfolioService.loadPortfolio();
-    }
-  });
-
-  private onLoadPortfolioResourceStatus = effect(() => {
-    if (this.loadPortfolioService.status() === "resolved") {
-      this.portfolioStore.setState(this.loadPortfolioService.value());
     }
   });
 }
