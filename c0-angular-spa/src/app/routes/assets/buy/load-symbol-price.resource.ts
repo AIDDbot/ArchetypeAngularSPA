@@ -21,16 +21,18 @@ export class LoadSymbolPriceResource implements Resource<SymbolPrice> {
   public assetType: WritableSignal<AssetType> = signal<AssetType>("stock");
 
   private readonly apiUrl = "http://localhost:3000";
-  private readonly getResource = httpResource<StockPrice | CryptoRate>(
-    () =>
-      `${this.apiUrl}/${this.assetUrl()}/${this.symbol()}/${this.endpoint()}`
-  );
   private assetUrl = computed(() =>
     this.assetType() === "stock" ? "stocks" : "cryptos"
   );
   private endpoint = computed(() =>
     this.assetType() === "stock" ? "price" : "rate"
   );
+  private readonly getResource = httpResource<StockPrice | CryptoRate>(() =>
+    !this.symbol() || !this.assetUrl() || !this.endpoint()
+      ? undefined
+      : `${this.apiUrl}/${this.assetUrl()}/${this.symbol()}/${this.endpoint()}`
+  );
+
   public value = computed(() => {
     if (this.assetType() === "stock") {
       const stockPrice = this.getResource.value() as StockPrice;

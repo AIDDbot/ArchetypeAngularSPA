@@ -72,15 +72,17 @@ export class BuyAssetFormComponent {
   protected pricePerUnit = model<number>(0);
   protected units = model<number>(100);
 
+  // ? could be a single linkedList
+  // ! reduce the number of effects
+
   private readonly onSymbolTypeRadioChange = effect(() => {
     this.symbolsResource.assetType.set(this.assetType());
+    this.symbol.set("");
     this.symbolPriceResource.assetType.set(this.assetType());
   });
   private readonly onSelectedSymbolChange = effect(() => {
     this.symbolPriceResource.symbol.set(this.symbol());
   });
-
-  // ? could be a single linkedList
 
   private readonly onLoadSymbolsResourceStatus = effect(() => {
     if (this.symbolsResource.status() === "resolved") {
