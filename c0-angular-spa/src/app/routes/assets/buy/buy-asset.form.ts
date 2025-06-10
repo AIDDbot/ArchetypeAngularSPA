@@ -1,4 +1,11 @@
-import { Component, effect, inject, model, output } from "@angular/core";
+import {
+  Component,
+  effect,
+  inject,
+  linkedSignal,
+  model,
+  output,
+} from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { AssetType } from "../../../shared/portfolio/asset.type";
 import { CreateTransactionDto } from "../../../shared/portfolio/create-transaction.dto";
@@ -67,39 +74,29 @@ export class BuyAssetFormComponent {
   private readonly symbolPriceResource = inject(LoadSymbolPriceResource);
 
   protected assetType = model<AssetType>("stock");
-  protected symbols = model<{ symbol: string; name: string }[]>([]);
+  protected symbols = linkedSignal<{ symbol: string; name: string }[]>(
+    () => this.symbolsResource.value() || []
+  );
   protected symbol = model<string>("");
-  protected pricePerUnit = model<number>(0);
   protected units = model<number>(100);
+  protected pricePerUnit = linkedSignal<number>(() =>
+    this.symbolPriceResource.value()
+  );
 
-  // ? could be a single linkedList
-  // ! reduce the number of effects
-
-  private readonly onSymbolTypeRadioChange = effect(() => {
-    this.symbolsResource.assetType.set(this.assetType());
+  private readonly onAssetTypeRadioChange = effect(() => {
     this.symbol.set("");
-    this.symbolPriceResource.assetType.set(this.assetType());
-  });
-  private readonly onSelectedSymbolChange = effect(() => {
-    this.symbolPriceResource.symbol.set(this.symbol());
   });
 
-  private readonly onLoadSymbolsResourceStatus = effect(() => {
-    if (this.symbolsResource.status() === "resolved") {
-      this.symbols.set(this.symbolsResource.value());
-    }
-  });
-
-  private readonly onLoadSymbolPriceResourceStatus = effect(() => {
-    if (this.symbolPriceResource.status() === "resolved") {
-      this.pricePerUnit.set(this.symbolPriceResource.value().pricePerUnit);
-    }
-  });
+  constructor() {
+    this.symbolsResource.assetType = this.assetType;
+    this.symbolPriceResource.assetType = this.assetType;
+    this.symbolPriceResource.symbol = this.symbol;
+  }
 
   protected onSubmitClick(): void {
     const transaction: CreateTransactionDto = {
       symbol: this.symbol(),
-      price_per_unit: this.symbolPriceResource.value().pricePerUnit,
+      price_per_unit: this.symbolPriceResource.value(),
       units: this.units(),
       type: "buy",
       asset_type: "stock",

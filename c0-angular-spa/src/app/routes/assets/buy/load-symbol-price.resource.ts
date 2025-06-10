@@ -10,13 +10,8 @@ import { AssetType } from "../../../shared/portfolio/asset.type";
 import { CryptoRate } from "../../../shared/portfolio/crypto-rate.type";
 import { StockPrice } from "../../../shared/portfolio/stock-price.type";
 
-export type SymbolPrice = {
-  symbol: string;
-  pricePerUnit: number;
-};
-
 @Injectable()
-export class LoadSymbolPriceResource implements Resource<SymbolPrice> {
+export class LoadSymbolPriceResource implements Resource<number> {
   public symbol: WritableSignal<string> = signal<string>("");
   public assetType: WritableSignal<AssetType> = signal<AssetType>("stock");
 
@@ -36,20 +31,14 @@ export class LoadSymbolPriceResource implements Resource<SymbolPrice> {
   public value = computed(() => {
     if (this.assetType() === "stock") {
       const stockPrice = this.getResource.value() as StockPrice;
-      return {
-        symbol: stockPrice.symbol,
-        pricePerUnit: stockPrice.price,
-      };
+      return stockPrice?.price ?? 0;
     } else {
       const cryptoRate = this.getResource.value() as CryptoRate;
-      return {
-        symbol: cryptoRate.symbol,
-        pricePerUnit: cryptoRate.dollar,
-      };
+      return cryptoRate?.dollar ?? 0;
     }
   });
   public status = this.getResource.status;
   public error = this.getResource.error;
   public isLoading = this.getResource.isLoading;
-  public hasValue = (): this is Resource<SymbolPrice> => true;
+  public hasValue = (): this is Resource<number> => true;
 }
