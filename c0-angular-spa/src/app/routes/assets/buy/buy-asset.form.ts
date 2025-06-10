@@ -1,11 +1,4 @@
-import {
-  Component,
-  effect,
-  inject,
-  linkedSignal,
-  model,
-  output,
-} from "@angular/core";
+import { Component, inject, linkedSignal, model, output } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { AssetType } from "../../../shared/portfolio/asset.type";
 import { CreateTransactionDto } from "../../../shared/portfolio/create-transaction.dto";
@@ -50,7 +43,7 @@ import { LoadSymbolsResource } from "./load-symbols.resource";
         <label for="price_per_unit">Price per unit</label>
         <input
           type="number"
-          [(ngModel)]="pricePerUnit"
+          [value]="pricePerUnit()"
           name="price_per_unit"
           id="price_per_unit"
           readonly
@@ -74,18 +67,12 @@ export class BuyAssetFormComponent {
   private readonly symbolPriceResource = inject(LoadSymbolPriceResource);
 
   protected assetType = model<AssetType>("stock");
-  protected symbols = linkedSignal<{ symbol: string; name: string }[]>(
-    () => this.symbolsResource.value() || []
+  protected symbols = this.symbolsResource.value;
+  protected symbol = linkedSignal<string>(
+    () => this.symbols()[0]?.symbol ?? ""
   );
-  protected symbol = model<string>("");
-  protected units = model<number>(100);
-  protected pricePerUnit = linkedSignal<number>(() =>
-    this.symbolPriceResource.value()
-  );
-
-  private readonly onAssetTypeRadioChange = effect(() => {
-    this.symbol.set("");
-  });
+  protected units = model<number>(1);
+  protected pricePerUnit = this.symbolPriceResource.value;
 
   constructor() {
     this.symbolsResource.assetType = this.assetType;
@@ -99,8 +86,9 @@ export class BuyAssetFormComponent {
       price_per_unit: this.symbolPriceResource.value(),
       units: this.units(),
       type: "buy",
-      asset_type: "stock",
+      asset_type: this.assetType(),
     };
     this.buy.emit(transaction);
+    this.units.set(1);
   }
 }
