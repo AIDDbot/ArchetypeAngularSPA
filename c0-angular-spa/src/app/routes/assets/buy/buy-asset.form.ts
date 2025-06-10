@@ -63,8 +63,8 @@ import { LoadSymbolsResource } from "./load-symbols.resource";
 })
 export class BuyAssetFormComponent {
   public buy = output<CreateTransactionDto>();
-  private readonly loadSymbolsResource = inject(LoadSymbolsResource);
-  private readonly loadSymbolPriceResource = inject(LoadSymbolPriceResource);
+  private readonly symbolsResource = inject(LoadSymbolsResource);
+  private readonly symbolPriceResource = inject(LoadSymbolPriceResource);
 
   protected assetType = model<AssetType>("stock");
   protected symbols = model<{ symbol: string; name: string }[]>([]);
@@ -73,27 +73,31 @@ export class BuyAssetFormComponent {
   protected units = model<number>(100);
 
   private readonly onSymbolTypeRadioChange = effect(() => {
-    this.loadSymbolsResource.assetType.set(this.assetType());
-    this.loadSymbolPriceResource.assetType.set(this.assetType());
+    this.symbolsResource.assetType.set(this.assetType());
+    this.symbolPriceResource.assetType.set(this.assetType());
   });
   private readonly onSelectedSymbolChange = effect(() => {
-    this.loadSymbolPriceResource.symbol.set(this.symbol());
+    this.symbolPriceResource.symbol.set(this.symbol());
   });
+
+  // ? could be a single linkedList
+
   private readonly onLoadSymbolsResourceStatus = effect(() => {
-    if (this.loadSymbolsResource.status() === "resolved") {
-      this.symbols.set(this.loadSymbolsResource.value());
+    if (this.symbolsResource.status() === "resolved") {
+      this.symbols.set(this.symbolsResource.value());
     }
   });
+
   private readonly onLoadSymbolPriceResourceStatus = effect(() => {
-    if (this.loadSymbolPriceResource.status() === "resolved") {
-      this.pricePerUnit.set(this.loadSymbolPriceResource.value().pricePerUnit);
+    if (this.symbolPriceResource.status() === "resolved") {
+      this.pricePerUnit.set(this.symbolPriceResource.value().pricePerUnit);
     }
   });
 
   protected onSubmitClick(): void {
     const transaction: CreateTransactionDto = {
       symbol: this.symbol(),
-      price_per_unit: this.loadSymbolPriceResource.value().pricePerUnit,
+      price_per_unit: this.symbolPriceResource.value().pricePerUnit,
       units: this.units(),
       type: "buy",
       asset_type: "stock",

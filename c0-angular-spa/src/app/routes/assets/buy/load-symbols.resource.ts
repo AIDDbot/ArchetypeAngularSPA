@@ -2,17 +2,17 @@ import { httpResource } from "@angular/common/http";
 import { computed, Injectable, Resource, signal } from "@angular/core";
 import { AssetType } from "../../../shared/portfolio/asset.type";
 
+export type AnySymbol = { symbol: string; name: string };
+
 @Injectable()
-export class LoadSymbolsResource
-  implements Resource<{ symbol: string; name: string }[]>
-{
-  private readonly apiUrl = "http://localhost:3000/";
-  private readonly getResource = httpResource<
-    { symbol: string; name: string }[]
-  >(() => `${this.apiUrl}${this.assetResource()}`);
+export class LoadSymbolsResource implements Resource<AnySymbol[]> {
+  private readonly apiUrl = "http://localhost:3000";
+  private readonly getResource = httpResource<AnySymbol[]>(
+    () => `${this.apiUrl}/${this.assetUrl()}`
+  );
 
   public assetType = signal<AssetType>("stock");
-  private assetResource = computed(() =>
+  private assetUrl = computed(() =>
     this.assetType() === "stock" ? "stocks" : "cryptos"
   );
 
@@ -20,6 +20,5 @@ export class LoadSymbolsResource
   public status = this.getResource.status;
   public error = this.getResource.error;
   public isLoading = this.getResource.isLoading;
-  public hasValue = (): this is Resource<{ symbol: string; name: string }[]> =>
-    true;
+  public hasValue = (): this is Resource<AnySymbol[]> => true;
 }
