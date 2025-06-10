@@ -1,44 +1,39 @@
-import {
-  Component,
-  effect,
-  inject,
-  model,
-  output,
-  signal,
-  WritableSignal,
-} from "@angular/core";
-import {
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from "@angular/forms";
+import { Component, effect, inject, model, output } from "@angular/core";
+import { FormsModule } from "@angular/forms";
 import { AssetType } from "../../../shared/portfolio/asset.type";
 import { CreateTransactionDto } from "../../../shared/portfolio/create-transaction.dto";
-import { LoadStockPriceResource } from "./load-stock-price.resource";
-import { LoadStocksResource } from "./load-stocks.resource";
+import { LoadSymbolPriceResource } from "./load-symbol-price.resource";
+import { LoadSymbolsResource } from "./load-symbols.resource";
 
 @Component({
   selector: "app-buy-asset-form",
-  imports: [ReactiveFormsModule],
-  providers: [LoadStocksResource, LoadStockPriceResource],
+  imports: [FormsModule],
+  providers: [LoadSymbolsResource, LoadSymbolPriceResource],
   template: `
-    <form [formGroup]="form">
+    <form>
       <fieldset>
         <legend>Buy an Asset</legend>
-        <label for="asset_type">Asset Type</label>
+        <label for="asset_type">Asset Type to buy</label>
         <section>
-          <input type="radio" id="stock" name="asset_type" />
+          <input
+            type="radio"
+            name="asset_type"
+            id="stock"
+            value="stock"
+            [(ngModel)]="assetType"
+          />
           <label for="stock"> Stock </label>
-          <input type="radio" id="crypto" name="asset_type" />
+          <input
+            type="radio"
+            name="asset_type"
+            id="crypto"
+            value="crypto"
+            [(ngModel)]="assetType"
+          />
           <label for="crypto"> Crypto </label>
         </section>
-        <label for="symbol">Symbol</label>
-        <select
-          formControlName="symbol"
-          id="symbol"
-          (change)="onSymbolChange($event)"
-        >
+        <label for="symbol">Symbol to buy</label>
+        <select [(ngModel)]="symbol" id="symbol" name="symbol">
           @for (symbol of symbols(); track symbol.symbol) {
             <option [value]="symbol.symbol">
               {{ symbol.name }}
@@ -48,59 +43,61 @@ import { LoadStocksResource } from "./load-stocks.resource";
         <label for="price_per_unit">Price per unit</label>
         <input
           type="number"
-          formControlName="price_per_unit"
+          [(ngModel)]="pricePerUnit"
+          name="price_per_unit"
           id="price_per_unit"
           readonly
         />
         <label for="units">Units</label>
-        <input type="number" formControlName="units" id="units" />
+        <input
+          type="number"
+          [(ngModel)]="units"
+          name="units"
+          id="units"
+          min="1"
+        />
       </fieldset>
       <button type="submit" (click)="onSubmitClick()">Buy</button>
     </form>
   `,
 })
 export class BuyAssetFormComponent {
-  private readonly loadStocksResource = inject(LoadStocksResource);
-  private readonly loadStockPriceResource = inject(LoadStockPriceResource);
-  protected readonly form = new FormGroup({
-    symbol: new FormControl("AAPL", [Validators.required]),
-    price_per_unit: new FormControl(150, [Validators.required]),
-    units: new FormControl(100, [Validators.required]),
-  });
   public buy = output<CreateTransactionDto>();
+  private readonly loadSymbolsResource = inject(LoadSymbolsResource);
+  private readonly loadSymbolPriceResource = inject(LoadSymbolPriceResource);
+
+  protected assetType = model<AssetType>("stock");
+  protected symbols = model<{ symbol: string; name: string }[]>([]);
+  protected symbol = model<string>("");
+  protected pricePerUnit = model<number>(0);
+  protected units = model<number>(100);
+
+  private readonly onSymbolTypeRadioChange = effect(() => {
+    this.loadSymbolsResource.assetType.set(this.assetType());
+    this.loadSymbolPriceResource.assetType.set(this.assetType());
+  });
+  private readonly onSelectedSymbolChange = effect(() => {
+    this.loadSymbolPriceResource.symbol.set(this.symbol());
+  });
+  private readonly onLoadSymbolsResourceStatus = effect(() => {
+    if (this.loadSymbolsResource.status() === "resolved") {
+      this.symbols.set(this.loadSymbolsResource.value());
+    }
+  });
+  private readonly onLoadSymbolPriceResourceStatus = effect(() => {
+    if (this.loadSymbolPriceResource.status() === "resolved") {
+      this.pricePerUnit.set(this.loadSymbolPriceResource.value().pricePerUnit);
+    }
+  });
+
   protected onSubmitClick(): void {
     const transaction: CreateTransactionDto = {
-      ...(this.form.value as unknown as CreateTransactionDto),
+      symbol: this.symbol(),
+      price_per_unit: this.loadSymbolPriceResource.value().pricePerUnit,
+      units: this.units(),
       type: "buy",
       asset_type: "stock",
     };
     this.buy.emit(transaction);
   }
-  protected symbolTypeRadio = model<AssetType>("stock");
-  protected symbols = model<{ symbol: string; name: string }[]>([]);
-  private readonly onSymbolChangeEffect = effect(() => {
-    if (this.symbolTypeRadio() === "stock") {
-      this.symbols.set(
-        this.loadStocksResource.value().map((stock) => ({
-          symbol: stock.symbol,
-          name: stock.name,
-        }))
-      );
-    }
-  });
-  protected selectedSymbol: WritableSignal<string> = signal<string>("");
-  protected onSymbolChange(event: Event): void {
-    const symbol = (event.target as HTMLSelectElement).value;
-    this.selectedSymbol.set(symbol);
-  }
-  private readonly onSelectedSymbolChange = effect(() => {
-    this.loadStockPriceResource.symbol.set(this.selectedSymbol());
-  });
-  private readonly onLoadStockPriceResourceStatus = effect(() => {
-    if (this.loadStockPriceResource.status() === "resolved") {
-      this.form.patchValue({
-        price_per_unit: this.loadStockPriceResource.value().price,
-      });
-    }
-  });
 }
