@@ -7,18 +7,14 @@ export type AnySymbol = { symbol: string; name: string };
 @Injectable()
 export class LoadSymbolsResource implements Resource<AnySymbol[]> {
   private readonly apiUrl = "http://localhost:3000";
-  private readonly getResource = httpResource<AnySymbol[]>(
-    () => `${this.apiUrl}/${this.assetUrl()}`
-  );
+  private readonly symbols = httpResource<AnySymbol[]>(() => `${this.apiUrl}/${this.assetUrl()}`);
 
   public assetType = signal<AssetType>("stock");
-  private assetUrl = computed(() =>
-    this.assetType() === "stock" ? "stocks" : "cryptos"
-  );
+  private assetUrl = computed(() => (this.assetType() === "stock" ? "stocks" : "cryptos"));
 
-  public value = computed(() => this.getResource.value() ?? []);
-  public status = this.getResource.status;
-  public error = this.getResource.error;
-  public isLoading = this.getResource.isLoading;
+  public value = computed(() => this.symbols.value() ?? []);
+  public status = this.symbols.status;
+  public error = this.symbols.error;
+  public isLoading = this.symbols.isLoading;
   public hasValue = (): this is Resource<AnySymbol[]> => true;
 }

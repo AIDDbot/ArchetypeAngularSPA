@@ -11,51 +11,48 @@ import { LoadSymbolsResource } from "./load-symbols.resource";
   providers: [LoadSymbolsResource, LoadSymbolPriceResource],
   template: `
     <form>
-      <fieldset>
-        <legend>Buy an Asset</legend>
-        <label for="asset_type">Asset Type to buy</label>
+      <fieldset class="grid">
         <section>
-          <input
-            type="radio"
-            name="asset_type"
-            id="stock"
-            value="stock"
-            [(ngModel)]="assetType"
-          />
-          <label for="stock"> Stock </label>
-          <input
-            type="radio"
-            name="asset_type"
-            id="crypto"
-            value="crypto"
-            [(ngModel)]="assetType"
-          />
-          <label for="crypto"> Crypto </label>
+          <section>
+            <label for="asset_type">Asset Type to buy</label>
+            <input
+              type="radio"
+              name="asset_type"
+              id="stock"
+              value="stock"
+              [(ngModel)]="assetType"
+            />
+            <label for="stock"> Stock </label>
+            <input
+              type="radio"
+              name="asset_type"
+              id="crypto"
+              value="crypto"
+              [(ngModel)]="assetType"
+            />
+            <label htmlFor="crypto"> Crypto </label>
+          </section>
+          <label for="symbol">Symbol to buy</label>
+          <select [(ngModel)]="symbol" id="symbol" name="symbol">
+            @for (symbol of symbols(); track symbol.symbol) {
+              <option [value]="symbol.symbol">
+                {{ symbol.name }}
+              </option>
+            }
+          </select>
         </section>
-        <label for="symbol">Symbol to buy</label>
-        <select [(ngModel)]="symbol" id="symbol" name="symbol">
-          @for (symbol of symbols(); track symbol.symbol) {
-            <option [value]="symbol.symbol">
-              {{ symbol.name }}
-            </option>
-          }
-        </select>
-        <label for="price_per_unit">Price per unit</label>
-        <input
-          type="number"
-          [value]="pricePerUnit()"
-          name="price_per_unit"
-          id="price_per_unit"
-          readonly
-        />
-        <label for="units">Units</label>
-        <input
-          type="number"
-          [(ngModel)]="units"
-          name="units"
-          id="units"
-          min="1"
-        />
+        <section>
+          <label for="price_per_unit">Price per unit</label>
+          <input
+            type="number"
+            [value]="pricePerUnit()"
+            name="price_per_unit"
+            id="price_per_unit"
+            readonly
+          />
+          <label for="units">Units</label>
+          <input type="number" [(ngModel)]="units" name="units" id="units" min="1" />
+        </section>
       </fieldset>
       <button type="submit" (click)="onSubmitClick()">Buy</button>
     </form>
@@ -68,9 +65,7 @@ export class BuyAssetFormComponent {
 
   protected assetType = model<AssetType>("stock");
   protected symbols = this.symbolsResource.value;
-  protected symbol = linkedSignal<string>(
-    () => this.symbols()[0]?.symbol ?? ""
-  );
+  protected symbol = linkedSignal<string>(() => this.symbols()[0]?.symbol ?? "");
   protected units = model<number>(1);
   protected pricePerUnit = this.symbolPriceResource.value;
 
@@ -82,13 +77,14 @@ export class BuyAssetFormComponent {
 
   protected onSubmitClick(): void {
     const transaction: CreateTransactionDto = {
+      type: "buy",
+      asset_type: this.assetType(),
       symbol: this.symbol(),
       price_per_unit: this.symbolPriceResource.value(),
       units: this.units(),
-      type: "buy",
-      asset_type: this.assetType(),
     };
     this.buy.emit(transaction);
     this.units.set(1);
+    this.symbol.set(this.symbols()[0]?.symbol ?? "");
   }
 }

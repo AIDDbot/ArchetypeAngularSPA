@@ -1,4 +1,5 @@
 import { Component, effect, inject } from "@angular/core";
+import { PageComponent } from "../../../shared/page.component";
 import { BuyAssetResource } from "../../../shared/portfolio/buy-asset.resource";
 import { CreateTransactionDto } from "../../../shared/portfolio/create-transaction.dto";
 import { LoadPortfolioResource } from "../../../shared/portfolio/load-portfolio.resource";
@@ -8,10 +9,12 @@ import { BuyAssetFormComponent } from "./buy-asset.form";
 
 @Component({
   providers: [BuyAssetResource, LoadPortfolioResource],
-  imports: [BuyAssetFormComponent, ResourceComponent],
+  imports: [BuyAssetFormComponent, ResourceComponent, PageComponent],
   template: `
-    <app-buy-asset-form (buy)="onBuy($event)" />
-    <app-resource [resource]="buyAssetResource"> </app-resource>
+    <app-page title="Buy an Asset">
+      <app-buy-asset-form (buy)="onBuy($event)" />
+      <app-resource [resource]="buyAssetResource"> </app-resource>
+    </app-page>
   `,
 })
 export default class BuyAssetPage {

@@ -1,44 +1,37 @@
 import { httpResource } from "@angular/common/http";
-import {
-  computed,
-  Injectable,
-  Resource,
-  signal,
-  WritableSignal,
-} from "@angular/core";
+import { computed, Injectable, Resource, signal } from "@angular/core";
 import { AssetType } from "../../../shared/portfolio/asset.type";
 import { CryptoRate } from "../../../shared/portfolio/crypto-rate.type";
 import { StockPrice } from "../../../shared/portfolio/stock-price.type";
 
 @Injectable()
 export class LoadSymbolPriceResource implements Resource<number> {
-  public symbol: WritableSignal<string> = signal<string>("");
-  public assetType: WritableSignal<AssetType> = signal<AssetType>("stock");
-
   private readonly apiUrl = "http://localhost:3000";
-  private assetUrl = computed(() =>
-    this.assetType() === "stock" ? "stocks" : "cryptos"
-  );
-  private endpoint = computed(() =>
-    this.assetType() === "stock" ? "price" : "rate"
-  );
-  private readonly getResource = httpResource<StockPrice | CryptoRate>(() =>
-    !this.symbol() || !this.assetUrl() || !this.endpoint()
-      ? undefined
-      : `${this.apiUrl}/${this.assetUrl()}/${this.symbol()}/${this.endpoint()}`
-  );
+  private readonly symbolPrice = httpResource<StockPrice | CryptoRate>(() => {
+    const invalidParams = !this.symbol() || !this.assetUrl() || !this.endpoint();
+    if (invalidParams) {
+      return undefined;
+    }
+    return `${this.apiUrl}/${this.assetUrl()}/${this.symbol()}/${this.endpoint()}`;
+  });
+
+  public symbol = signal<string>("");
+  public assetType = signal<AssetType>("stock");
+
+  private assetUrl = computed(() => (this.assetType() === "stock" ? "stocks" : "cryptos"));
+  private endpoint = computed(() => (this.assetType() === "stock" ? "price" : "rate"));
 
   public value = computed(() => {
     if (this.assetType() === "stock") {
-      const stockPrice = this.getResource.value() as StockPrice;
+      const stockPrice = this.symbolPrice.value() as StockPrice;
       return stockPrice?.price ?? 0;
     } else {
-      const cryptoRate = this.getResource.value() as CryptoRate;
+      const cryptoRate = this.symbolPrice.value() as CryptoRate;
       return cryptoRate?.dollar ?? 0;
     }
   });
-  public status = this.getResource.status;
-  public error = this.getResource.error;
-  public isLoading = this.getResource.isLoading;
+  public status = this.symbolPrice.status;
+  public error = this.symbolPrice.error;
+  public isLoading = this.symbolPrice.isLoading;
   public hasValue = (): this is Resource<number> => true;
 }
