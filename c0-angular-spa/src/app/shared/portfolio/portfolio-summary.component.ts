@@ -11,6 +11,8 @@ import { PortfolioStore } from "./portfolio.store";
       <dd>{{ assetsValue() | currency }}</dd>
       <dt>Cash:</dt>
       <dd>{{ cash() | currency }}</dd>
+      <dt>Net Value:</dt>
+      <dd>{{ netValue() | currency }}</dd>
     </dl>
   `,
 })
@@ -18,4 +20,5 @@ export class PortfolioSummaryComponent {
   private readonly portfolioStore = inject(PortfolioStore);
   protected assetsValue = computed(() => this.portfolioStore.assetsValue());
   protected cash = computed(() => this.portfolioStore.cash());
+  protected netValue = computed(() => this.portfolioStore.netValue());
 }
