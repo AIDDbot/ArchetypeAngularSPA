@@ -1,4 +1,4 @@
-import { Component, inject, linkedSignal, model, output } from "@angular/core";
+import { Component, computed, inject, linkedSignal, model, output } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { AssetType } from "../../../shared/portfolio/asset.type";
 import { CreateTransactionDto } from "../../../shared/portfolio/create-transaction.dto";
@@ -34,9 +34,9 @@ import { LoadSymbolsResource } from "./load-symbols.resource";
           </section>
           <label for="symbol">Symbol to buy</label>
           <select [(ngModel)]="symbol" id="symbol" name="symbol">
-            @for (symbol of symbols(); track symbol.symbol) {
-              <option [value]="symbol.symbol">
-                {{ symbol.name }}
+            @for (anySymbol of symbols(); track anySymbol.symbol) {
+              <option [value]="anySymbol.symbol">
+                {{ anySymbol.name }}
               </option>
             }
           </select>
@@ -59,15 +59,17 @@ import { LoadSymbolsResource } from "./load-symbols.resource";
   `,
 })
 export class BuyAssetFormComponent {
-  public buy = output<CreateTransactionDto>();
+  public readonly buy = output<CreateTransactionDto>();
+
   private readonly symbolsResource = inject(LoadSymbolsResource);
   private readonly symbolPriceResource = inject(LoadSymbolPriceResource);
 
   protected assetType = model<AssetType>("stock");
   protected symbols = this.symbolsResource.value;
-  protected symbol = linkedSignal<string>(() => this.symbols()[0]?.symbol ?? "");
-  protected units = model<number>(1);
+  protected firstSymbol = computed(() => this.symbols()[0]?.symbol);
+  protected symbol = linkedSignal<string>(() => this.firstSymbol() ?? "");
   protected pricePerUnit = this.symbolPriceResource.value;
+  protected units = model<number>(1);
 
   constructor() {
     this.symbolsResource.assetType = this.assetType;
@@ -85,6 +87,6 @@ export class BuyAssetFormComponent {
     };
     this.buy.emit(transaction);
     this.units.set(1);
-    this.symbol.set(this.symbols()[0]?.symbol ?? "");
+    this.symbol.set(this.firstSymbol());
   }
 }

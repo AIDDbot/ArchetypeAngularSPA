@@ -13,24 +13,30 @@ import { BuyAssetFormComponent } from "./buy-asset.form";
   template: `
     <app-page title="Buy an Asset">
       <app-buy-asset-form (buy)="onBuy($event)" />
-      <app-resource [resource]="buyAssetResource"> </app-resource>
+      <app-resource [resource]="buyAsset"> </app-resource>
     </app-page>
   `,
 })
 export default class BuyAssetPage {
   private readonly portfolioStore = inject(PortfolioStore);
-  protected readonly buyAssetResource = inject(BuyAssetResource);
-  private readonly loadPortfolioResource = inject(LoadPortfolioResource);
+  protected readonly buyAsset = inject(BuyAssetResource);
+  private readonly loadPortfolio = inject(LoadPortfolioResource);
 
-  private onBuyAssetResourceStatus = effect(() => {
-    if (this.buyAssetResource.status() === "resolved") {
-      this.buyAssetResource.status.set("idle");
-      this.loadPortfolioResource.loadPortfolio();
+  private onBuyAssetResolved = effect(() => {
+    if (this.buyAsset.status() === "resolved") {
+      this.buyAsset.status.set("idle");
+      this.loadPortfolio.loadPortfolio();
+    }
+  });
+
+  private onLoadPortfolioResolved = effect(() => {
+    if (this.loadPortfolio.status() === "resolved") {
+      this.portfolioStore.setState(this.loadPortfolio.value());
     }
   });
 
   protected onBuy(transaction: CreateTransactionDto): void {
     const portfolioId = this.portfolioStore.portfolio().id;
-    this.buyAssetResource.buyAsset(portfolioId, transaction);
+    this.buyAsset.buyAsset(portfolioId, transaction);
   }
 }

@@ -1,13 +1,11 @@
 import { HttpClient } from "@angular/common/http";
-import { effect, inject, Injectable, Resource, ResourceStatus, signal } from "@angular/core";
-import { PortfolioStore } from "./portfolio.store";
+import { inject, Injectable, Resource, ResourceStatus, signal } from "@angular/core";
 import { DEFAULT_PORTFOLIO, Portfolio } from "./portfolio.type";
 
 @Injectable()
 export class CreatePortfolioResource implements Resource<Portfolio> {
   private readonly url = "http://localhost:3000/portfolios";
   private readonly http = inject(HttpClient);
-  private readonly portfolioStore = inject(PortfolioStore);
 
   // Resource interface
   public value = signal<Portfolio>(DEFAULT_PORTFOLIO);
@@ -35,10 +33,4 @@ export class CreatePortfolioResource implements Resource<Portfolio> {
       },
     });
   }
-
-  private onCreatePortfolioResolved = effect(() => {
-    if (this.status() === "resolved") {
-      this.portfolioStore.setState(this.value());
-    }
-  });
 }

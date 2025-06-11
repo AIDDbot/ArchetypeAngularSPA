@@ -40,14 +40,20 @@ export default class HomePage {
   protected assetsValue = this.portfolioStore.assetsValue;
   protected lastUpdated = computed(() => this.portfolio()?.lastUpdated);
 
-  protected onCreatePortfolio(portfolio: Portfolio): void {
-    this.createPortfolio.createPortfolio(portfolio);
-  }
-
   private onCreatePortfolioResolved = effect(() => {
     if (this.createPortfolio.status() === "resolved") {
       this.createPortfolio.status.set("idle");
       this.loadPortfolio.loadPortfolio();
     }
   });
+
+  private onLoadPortfolioResolved = effect(() => {
+    if (this.loadPortfolio.status() === "resolved") {
+      this.portfolioStore.setState(this.loadPortfolio.value());
+    }
+  });
+
+  protected onCreatePortfolio(portfolio: Portfolio): void {
+    this.createPortfolio.createPortfolio(portfolio);
+  }
 }

@@ -4,6 +4,13 @@ import { AssetType } from "../../../shared/portfolio/asset.type";
 import { CryptoRate } from "../../../shared/portfolio/crypto-rate.type";
 import { StockPrice } from "../../../shared/portfolio/stock-price.type";
 
+// Example responses:
+
+// http://localhost:3000/stocks/AAPL/price
+// {"symbol":"AAPL","price":303,"date":1749637206364}
+// http://localhost:3000/cryptos/BTC/rate
+// {"symbol":"BTC","dollar":4944.18,"date":1749637255729}
+
 @Injectable()
 export class LoadSymbolPriceResource implements Resource<number> {
   private readonly apiUrl = "http://localhost:3000";
@@ -15,8 +22,8 @@ export class LoadSymbolPriceResource implements Resource<number> {
     return `${this.apiUrl}/${this.assetUrl()}/${this.symbol()}/${this.endpoint()}`;
   });
 
-  public symbol = signal<string>("");
   public assetType = signal<AssetType>("stock");
+  public symbol = signal<string>("");
 
   private assetUrl = computed(() => (this.assetType() === "stock" ? "stocks" : "cryptos"));
   private endpoint = computed(() => (this.assetType() === "stock" ? "price" : "rate"));
