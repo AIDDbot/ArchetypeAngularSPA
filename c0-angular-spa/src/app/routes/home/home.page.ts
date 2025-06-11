@@ -10,15 +10,10 @@ import { PortfolioComponent } from "./portfolio.component";
 
 @Component({
   providers: [LoadPortfolioResource, CreatePortfolioResource],
-  imports: [
-    PageComponent,
-    ResourceComponent,
-    PortfolioComponent,
-    CreatePortfolioFormComponent,
-  ],
+  imports: [PageComponent, ResourceComponent, PortfolioComponent, CreatePortfolioFormComponent],
   template: `
     <app-page title="Your Portfolio">
-      <app-resource [resource]="getPortfolioResource">
+      <app-resource [resource]="loadPortfolio">
         @if (portfolio().id) {
           <app-portfolio
             [portfolio]="portfolio()"
@@ -26,7 +21,7 @@ import { PortfolioComponent } from "./portfolio.component";
             [assetsValue]="assetsValue()"
           />
         } @else {
-          <app-create-portfolio-form (save)="createPortfolio($event)" />
+          <app-create-portfolio-form (save)="onCreatePortfolio($event)" />
         }
       </app-resource>
       <footer>
@@ -37,22 +32,22 @@ import { PortfolioComponent } from "./portfolio.component";
 })
 export default class HomePage {
   private readonly portfolioStore = inject(PortfolioStore);
-  private readonly createPortfolioResource = inject(CreatePortfolioResource);
-  private readonly loadPortfolioResource = inject(LoadPortfolioResource);
-  protected getPortfolioResource = this.loadPortfolioResource;
+  private readonly createPortfolio = inject(CreatePortfolioResource);
+  protected readonly loadPortfolio = inject(LoadPortfolioResource);
+
   protected portfolio = this.portfolioStore.portfolio;
-  protected assetsValue = this.portfolioStore.assetsValue;
   protected netValue = this.portfolioStore.netValue;
+  protected assetsValue = this.portfolioStore.assetsValue;
   protected lastUpdated = computed(() => this.portfolio()?.lastUpdated);
 
-  protected createPortfolio(portfolio: Portfolio): void {
-    this.createPortfolioResource.createPortfolio(portfolio);
+  protected onCreatePortfolio(portfolio: Portfolio): void {
+    this.createPortfolio.createPortfolio(portfolio);
   }
 
-  private onCreatePortfolioResourceStatus = effect(() => {
-    if (this.createPortfolioResource.status() === "resolved") {
-      this.createPortfolioResource.status.set("idle");
-      this.loadPortfolioResource.loadPortfolio();
+  private onCreatePortfolioResolved = effect(() => {
+    if (this.createPortfolio.status() === "resolved") {
+      this.createPortfolio.status.set("idle");
+      this.loadPortfolio.loadPortfolio();
     }
   });
 }

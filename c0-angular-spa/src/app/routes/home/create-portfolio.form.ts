@@ -9,11 +9,7 @@ import { Portfolio } from "../../shared/portfolio/portfolio.type";
     <form [formGroup]="form">
       <fieldset>
         <label for="initial_cash">Initial Cash</label>
-        <input
-          type="number"
-          name="initial_cash"
-          formControlName="initial_cash"
-        />
+        <input type="number" name="initial_cash" formControlName="initial_cash" />
         <label for="name">Name</label>
         <input type="text" name="name" formControlName="name" />
       </fieldset>

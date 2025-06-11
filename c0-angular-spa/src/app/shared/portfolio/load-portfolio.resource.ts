@@ -6,20 +6,19 @@ import { DEFAULT_PORTFOLIO, Portfolio } from "./portfolio.type";
 @Injectable()
 export class LoadPortfolioResource implements Resource<Portfolio> {
   private readonly url = "http://localhost:3000/portfolios";
-  private readonly getResource = httpResource<Portfolio[]>(() => this.url);
+  private readonly portfolios = httpResource<Portfolio[]>(() => this.url);
   private readonly portfolioStore = inject(PortfolioStore);
-  public value = computed(
-    () => this.getResource.value()?.[0] ?? DEFAULT_PORTFOLIO
-  );
-  public status = this.getResource.status;
-  public error = this.getResource.error;
-  public isLoading = this.getResource.isLoading;
+
+  public value = computed(() => this.portfolios.value()?.[0] ?? DEFAULT_PORTFOLIO);
+  public status = this.portfolios.status;
+  public error = this.portfolios.error;
+  public isLoading = this.portfolios.isLoading;
   public hasValue = (): this is Resource<Portfolio> => true;
 
   public loadPortfolio(): void {
-    this.getResource.reload();
+    this.portfolios.reload();
   }
-  private onLoadPortfolioResourceStatus = effect(() => {
+  private onLoadPortfolioResolved = effect(() => {
     if (this.status() === "resolved") {
       this.portfolioStore.setState(this.value());
     }

@@ -30,7 +30,7 @@ import { Portfolio } from "../../shared/portfolio/portfolio.type";
             </thead>
             <tbody>
               @for (asset of portfolio().assets; track asset.symbol) {
-                <tr>
+                <tr id="{{ asset.symbol }}">
                   <td>{{ asset.symbol }}</td>
                   <td style="text-align: right">
                     {{ asset.units | number: "1.2-2" }}
@@ -56,7 +56,7 @@ import { Portfolio } from "../../shared/portfolio/portfolio.type";
         } @else {
           <h3>No assets yet in your portfolio</h3>
         }
-        <a [routerLink]="['assets', 'buy']">Add new asset</a>
+        <a [routerLink]="['assets', 'buy']">Buy assets</a>
       </main>
     </article>
   `,
