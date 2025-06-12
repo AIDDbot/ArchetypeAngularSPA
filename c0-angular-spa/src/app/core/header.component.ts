@@ -21,6 +21,9 @@ import { ThemeToggleComponent } from "./theme-toggle.component";
           <li>
             <app-portfolio-summary />
           </li>
+          <li>
+            <a [routerLink]="['stocks']">Stocks</a>
+          </li>
           @if (isLoggedIn()) {
             <li>
               <a [routerLink]="['user', user()]">User</a>

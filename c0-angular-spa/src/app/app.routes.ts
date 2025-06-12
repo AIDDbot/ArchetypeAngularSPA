@@ -1,3 +1,4 @@
+import { loadRemoteModule } from "@angular-architects/native-federation";
 import { Routes } from "@angular/router";
 
 export const routes: Routes = [
@@ -7,11 +8,18 @@ export const routes: Routes = [
   },
   {
     path: "user",
-    loadChildren: () =>
-      import("./routes/user/user.routes").then((m) => m.USER_ROUTES),
+    loadChildren: () => import("./routes/user/user.routes").then((m) => m.USER_ROUTES),
   },
   {
     path: "assets/buy",
     loadComponent: () => import("./routes/assets/buy/buy-asset.page"),
+  },
+  {
+    path: "stocks",
+    loadComponent: () =>
+      loadRemoteModule({
+        remoteName: "angular-app",
+        exposedModule: "./Stocks",
+      }),
   },
 ];
