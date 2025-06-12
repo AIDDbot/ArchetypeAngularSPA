@@ -1,16 +1,14 @@
-import { Component, signal } from '@angular/core';
-import { SearchComponent } from '../../../angular-lib/src/lib/search/search.component';
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [SearchComponent],
+  imports: [RouterOutlet],
   template: `
     <h1>Welcome to {{ title }}!</h1>
-    <lib-search [(searchTerm)]="searchTerm" />
-    <p>Search term: {{ searchTerm() }}</p>
+    <router-outlet />
   `,
 })
 export class App {
   protected title = 'angular-app';
-  protected searchTerm = signal<string>('Initial value');
 }

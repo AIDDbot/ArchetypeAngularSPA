@@ -7,6 +7,8 @@ ng new c1-angular-lib --create-application=false --zoneless=true
 ng g lib angular-lib
 ng g app angular-app --minimal -s -t --routing --ssr=false --style=css --zoneless --dry-run
 
+
+ng add @angular-architects/native-federation --project angular-app --port 4201 --type remote
 ```
 
 ## Development server
