@@ -7,7 +7,7 @@ export const routes: Routes = [
     component: StocksComponent,
   },
   {
-    path: 'stocks',
+    path: 'stocks/:st',
     loadComponent: () => import('./stocks/stocks.component'),
   },
 ];
