@@ -18,6 +18,7 @@ export const routes: Routes = [
     path: "stocks",
     loadComponent: () =>
       loadRemoteModule({
+        remoteEntry: "http://localhost:4201/remoteEntry.json",
         remoteName: "angular-app",
         exposedModule: "./Stocks",
       }),
