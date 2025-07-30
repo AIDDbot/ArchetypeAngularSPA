@@ -32,6 +32,7 @@ Documentation: [docs/](docs/)
 - [Project Requirements Document (PRD)](docs/PRD.md)
 - [Domain Model Document](docs/DOMAIN.md)
 - [Systems Architecture Document](docs/SYSTEMS.md)
+- [Feature Backlog](docs/BACKLOG.md)
 
 ---
 
