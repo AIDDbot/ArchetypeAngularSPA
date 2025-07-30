@@ -5,31 +5,14 @@
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "editor.codeActionsOnSave": {
-    "source.addMissingImports": "always",
-    "source.fixAll": "always",
-    "source.fixAll.eslint": "always",
-    "source.organizeImports": "always"
-  },
   "material-icon-theme.activeIconPack": "angular",
   "material-icon-theme.folders.associations": {
-    ".ai": "robot",
-    "architect": "godot",
-    "builder": "godot",
-    "craftsman": "godot",
     "file": "meta",
     "http": "api",
-    "prompts": "robot",
     "domain": "cobol",
     "system": "stack"
   },
   "material-icon-theme.files.associations": {
-    "*.blueprint.md": "apiblueprint",
-    "*.instructions.md": "twine",
-    "*.tracker.md": "verified",
-    "*.plan.md": "architecture",
-    "*.prompt.md": "pascal",
-    "*.template.md": "textlint",
     "*.adapter.ts": "adonis",
     "*.builder.ts": "unocss",
     "*.command.ts": "console",
@@ -58,6 +41,6 @@
   "workbench.colorCustomizations": {
     "statusBar.border": "#F637E3",
     "statusBar.background": "#F637E3",
-    "statusBar.foreground" : "#000000"
+    "statusBar.foreground": "#000000"
   }
 }

@@ -1,17 +1,17 @@
 {
-	"name": "archetype-angular-spa",
-	"version": "1.0.0",
-	"description": "Angular SPA Archetype",
-	"scripts": {},
-	"keywords": [],
-	"author": {
-		"name": "Alberto Basalo",
-		"company": "AI code Academy",
-		"website": "https://aicode.academy",
-		"email": "albertobasalo@aicode.academy"
-	},
-	"license": "ISC",
-	"devDependencies": {
-		"prettier": "^3.5.3"
-	}
+  "name": "archetype-angular-spa",
+  "version": "1.0.0",
+  "description": "Angular SPA Archetype",
+  "scripts": {},
+  "keywords": [],
+  "author": {
+    "name": "Alberto Basalo",
+    "company": "AI code Academy",
+    "website": "https://aicode.academy",
+    "email": "albertobasalo@aicode.academy"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "prettier": "^3.6.2"
+  }
 }
