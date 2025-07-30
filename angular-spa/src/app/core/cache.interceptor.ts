@@ -21,7 +21,7 @@ export const cacheInterceptor: HttpInterceptorFn = (req, next) => {
   const log: LogService = inject(LogService);
 
   const cachedResponse: HttpResponse<unknown> | undefined = cache.get(
-    req.url
+    req.url,
   ) as HttpResponse<unknown>;
 
   if (cachedResponse) {
@@ -32,6 +32,6 @@ export const cacheInterceptor: HttpInterceptorFn = (req, next) => {
     filter((event: HttpEvent<unknown>) => event instanceof HttpResponse),
     tap((event: HttpResponse<unknown>) => {
       cache.set(req.url, event);
-    })
+    }),
   );
 };

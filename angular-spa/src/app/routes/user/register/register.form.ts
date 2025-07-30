@@ -85,7 +85,7 @@ export class RegisterForm {
     },
     {
       validators: [mustMatchValidator("password", "password2")],
-    }
+    },
   );
 
   protected isInvalid(controlName: string): boolean | undefined {

@@ -24,8 +24,8 @@ export const appConfig: ApplicationConfig = {
         environment.APP_NAME,
         environment.APP_VERSION,
         environment.APP_REPOSITORY,
-        environment.APP_AUTHOR
-      )
+        environment.APP_AUTHOR,
+      ),
     ),
     provideAppInitializer(async () => {
       const globalStore = inject(GlobalStore);
@@ -40,7 +40,7 @@ export const appConfig: ApplicationConfig = {
         cacheInterceptor,
         usersFakeInterceptor,
         logFakeInterceptor,
-      ])
+      ]),
     ),
   ],
 };

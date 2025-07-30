@@ -18,7 +18,7 @@ export class GlobalStore {
   private cache: CacheService = inject(CacheService);
 
   private readonly state: WritableSignal<GlobalState> = signal<GlobalState>(
-    this.getInitialState()
+    this.getInitialState(),
   );
 
   private getInitialState(): GlobalState {
@@ -29,15 +29,15 @@ export class GlobalStore {
   public readonly theme: Signal<string> = computed(() => this.state().theme);
 
   public readonly ip: Signal<string> = computed(
-    () => this.state().ip || "127.0.0.1"
+    () => this.state().ip || "127.0.0.1",
   );
 
   public readonly user: Signal<string | undefined> = computed(
-    () => this.state().user
+    () => this.state().user,
   );
 
   public readonly token: Signal<string | undefined> = computed(
-    () => this.state().token
+    () => this.state().token,
   );
 
   public changeTheme(theme: string): void {

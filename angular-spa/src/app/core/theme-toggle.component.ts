@@ -14,7 +14,7 @@ export class ThemeToggleComponent {
   private theme: Signal<string> = this.globalStore.theme;
 
   protected icon: Signal<string> = computed(() =>
-    this.theme() === "light" ? "🔳" : "🔲"
+    this.theme() === "light" ? "🔳" : "🔲",
   );
 
   protected toggleTheme(): void {

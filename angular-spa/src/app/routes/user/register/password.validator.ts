@@ -6,7 +6,7 @@ import { AbstractControl, ValidationErrors, ValidatorFn } from "@angular/forms";
  * @returns A ValidationErrors object with the `password` property if validation fails, otherwise null.
  */
 export const passwordValidator = (
-  control: AbstractControl
+  control: AbstractControl,
 ): ValidationErrors | null => {
   const password = control.value;
   const hasDigit = /\d/.test(password);
@@ -27,7 +27,7 @@ export const passwordValidator = (
  */
 export function mustMatchValidator(
   controlName: string,
-  matchingControlName: string
+  matchingControlName: string,
 ): ValidatorFn {
   return (formGroup: AbstractControl): ValidationErrors | null => {
     const control = formGroup.get(controlName);

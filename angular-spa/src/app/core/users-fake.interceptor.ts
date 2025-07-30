@@ -14,7 +14,7 @@ export const usersFakeInterceptor: HttpInterceptorFn = (req, next) => {
           user: body.email,
           token: "a_fake_token" + new Date().getTime(),
         },
-      })
+      }),
     );
   }
   return of(
@@ -25,6 +25,6 @@ export const usersFakeInterceptor: HttpInterceptorFn = (req, next) => {
         email: "test@test.com",
         name: "Test User",
       },
-    })
+    }),
   );
 };
