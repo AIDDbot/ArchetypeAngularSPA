@@ -38,6 +38,10 @@
     "*.utils.ts": "tilt",
     "*.validator.ts": "velite"
   },
+  "material-icon-theme.languages.associations": {
+    "typescript": "angular",
+    "javascript": "angular"
+  },
   "workbench.colorCustomizations": {
     "statusBar.border": "#F637E3",
     "statusBar.background": "#F637E3",

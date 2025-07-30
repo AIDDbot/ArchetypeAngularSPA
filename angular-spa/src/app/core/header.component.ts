@@ -12,7 +12,7 @@ import { ThemeToggleComponent } from "./theme-toggle.component";
     <header>
       <nav>
         <ul>
-          <a [routerLink]="['']">Home</a>
+          <a [routerLink]="['']" class="logo color">Angular Archetype</a>
         </ul>
         <ul>
           @if (isLoggedIn()) {

@@ -1,7 +1,235 @@
-/* You can add global styles to this file, and also import other style files */
-body {
-  padding: 1rem;
+/* Modern CSS Reset and Global Styles */
+
+:root {
+  --pico-font-family: "Fira Mono", Consolas, monospace;
+  --pico-font-family-emoji: "Major Mono Display", Consolas, monospace;
+  --pico-font-family-sans-serif: Tomorrow, Roboto, Helvetica, Arial, sans-serif;
+  --pico-font-family-monospace: "Fira Mono", Consolas, monospace;
+  --pico-border-radius: 0rem;
+  --pico-typography-spacing-vertical: 0.6rem;
 }
-span {
-  margin-right: 0.5rem;
+
+body {
+  padding-top: 1%;
+  padding-bottom: 1%;
+  padding-left: 3%;
+  padding-right: 3%;
+  font-family: var(--pico-font-family);
+}
+
+@media (min-width: 576px) {
+  body {
+    padding-left: 4%;
+    padding-right: 4%;
+  }
+}
+
+@media (min-width: 768px) {
+  body {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+}
+
+@media (min-width: 1024px) {
+  body {
+    padding-left: 8%;
+    padding-right: 8%;
+  }
+}
+
+@media (min-width: 1280px) {
+  body {
+    padding-left: 10%;
+    padding-right: 10%;
+  }
+}
+
+@media (min-width: 1536px) {
+  body {
+    padding-left: 15%;
+    padding-right: 15%;
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--pico-font-family-sans-serif);
+}
+
+h1 {
+  --pico-font-size: 2.5rem;
+  --pico-line-height: 1.5;
+  --pico-typography-spacing-top: 3.5rem;
+  margin-bottom: 1rem;
+}
+
+h2 {
+  --pico-font-size: 2rem;
+  --pico-line-height: 1.5;
+  --pico-typography-spacing-top: 3rem;
+  margin-bottom: 1rem;
+}
+
+article,
+section {
+  padding-left: 4%;
+  padding-right: 4%;
+  padding-top: 2%;
+  padding-bottom: 2%;
+}
+
+header {
+  margin-bottom: 1rem;
+}
+
+[data-theme="light"] .light {
+  display: none;
+}
+
+[data-theme="dark"] .dark {
+  display: none;
+}
+
+/* COLORS */
+
+:root {
+  --ab-light-green: #00ff00;
+  --ab-green: #00aa00;
+  --ab-dark-green: #007700;
+  --ab-light-blue: #00ffff;
+  --ab-blue: #00aaff;
+  --ab-dark-blue: #0077ff;
+  --ab-white: #fff;
+  --ab-yellow: #fafa00;
+  --ab-red: #ff0000;
+  --ab-light-gray: #dddddd;
+  --ab-gray: #777777;
+  --ab-dark-gray: #333333;
+}
+
+/* dark theme */
+[data-theme="dark"] {
+  --pico-color: white;
+  --pico-background-color: black;
+  --pico-primary: var(--ab-blue);
+  --pico-primary-hover: var(--ab-blue);
+  --pico-primary-background: var(--ab-light-blue);
+  --pico-primary-hover-background: var(--ab-blue);
+  --pico-primary-inverse: black;
+  --pico-underline: var(--ab-light-blue);
+  --pico-primary-underline: var(--ab-light-blue);
+  --pico-secondary: var(--ab-light-green);
+  --pico-secondary-hover: var(--ab-green);
+  --pico-secondary-background: var(--ab-light-green);
+  --pico-secondary-hover-background: var(--ab-green);
+  --pico-box-shadow: 0 0 2px 0 var(--pico-primary);
+  --ab-theme-gray: var(--ab-dark-gray);
+  --ab-gradient-primary: linear-gradient(90deg, var(--ab-light-green), var(--ab-light-blue), var(--ab-blue));
+  --ab-gradient-secondary: linear-gradient(90deg, var(--ab-dark-green),
+      var(--ab-dark-blue), var(--ab-blue));
+  color-scheme: dark;
+}
+
+/* light theme */
+[data-theme="light"],
+:root:not([data-theme="dark"]) {
+  --pico-color: black;
+  --pico-background-color: white;
+  --pico-primary: var(--ab-blue);
+  --pico-primary-hover: var(--ab-light-blue);
+  --pico-primary-background: var(--ab-blue);
+  --pico-primary-hover-background: var(--ab-light-blue);
+  --pico-primary-inverse: white;
+  --pico-underline: var(--ab-blue);
+  --pico-primary-underline: var(--ab-blue);
+  --pico-secondary: var(--ab-light-green);
+  --pico-secondary-hover: var(--ab-green);
+  --pico-secondary-background: var(--ab-light-green);
+  --pico-secondary-hover-background: var(--ab-green);
+  --pico-box-shadow: 0 0 2px 0 var(--pico-primary);
+  --ab-theme-gray: var(--ab-light-gray);
+  --ab-gradient-primary: linear-gradient(90deg, var(--ab-dark-green),
+      var(--ab-dark-blue), var(--ab-blue));
+  --ab-gradient-secondary: linear-gradient(90deg, var(--ab-light-green),
+      var(--ab-light-green), var(--ab-blue));
+  color-scheme: light;
+}
+
+:root {
+  background-color: var(--pico-background-color);
+}
+
+strong,
+em,
+i,
+b {
+  color: var(--pico-color);
+}
+
+code {
+  color: var(--pico-color);
+  background-color: var(--ab-theme-gray);
+}
+
+a {
+  color: var(--pico-primary);
+}
+
+a:hover {
+  font-weight: bold;
+}
+
+
+/* CUSTOM */
+
+.center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.color {
+  background: var(--ab-gradient-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.colored-headers h2 {
+  background: var(--ab-gradient-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.comment {
+  color: var(--pico-primary);
+  margin-right: 1%;
+}
+
+.container {
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+.logo {
+  font-family: var(--pico-font-family-emoji);
+}
+
+.primary {
+  color: var(--pico-primary);
+}
+
+.secondary {
+  background: var(--ab-gradient-secondary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }

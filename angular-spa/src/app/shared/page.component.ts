@@ -5,7 +5,7 @@ import { Component, input, InputSignal } from "@angular/core";
   template: `
     <article>
       <header>
-        <h1>
+        <h1 class="color">
           {{ title() }}
         </h1>
       </header>
