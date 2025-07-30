@@ -1,12 +1,32 @@
 # Archetype Angular SPA
 
-Archetype for AI tools to create SPA web applications using Angular
+Archetype for AI tools to create SPA web applications using Angular:
+
+- Modern Angular dependencies and best practices
+  - Standalone components
+  - Signals instead of RxJS
+  - Modern Template syntax
+- Project structure
+  - src/app
+    - core
+    - routes
+    - shared
+- Architecture patterns:
+  - Container/Presentational components
+- Style guide changes
+  - *.page for routed containers
+  - *.form|table|component for presentational components
+- Features:
+  - Authentication and authorization
+  - Theme toggle
+  - Home with ip information
+
 
 Based on the [AIDDbot](https://github.com/AIcodeAcademy/AIDDbot) project.
 
 Repository: [AI code Academy / archetype angular spa](https://github.com/AIcodeAcademy/ArchetypeAngularSPA)
 
-AI instructions, prompts and rules: [.ai/](.ai/)
+AI chat modes, prompts and instructions (For github copilot): [.github](.github/)
 
 Documentation: [docs/](docs/)
 
