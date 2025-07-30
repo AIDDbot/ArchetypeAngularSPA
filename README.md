@@ -30,6 +30,7 @@ AI chat modes, prompts and instructions (For github copilot): [.github](.github/
 
 Documentation: [docs/](docs/)
 - [Project Requirements Document (PRD)](docs/PRD.md)
+- [Domain Model Document](docs/DOMAIN.md)
 
 ---
 
