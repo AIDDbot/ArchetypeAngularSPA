@@ -29,6 +29,7 @@ Repository: [AI code Academy / archetype angular spa](https://github.com/AIcodeA
 AI chat modes, prompts and instructions (For github copilot): [.github](.github/)
 
 Documentation: [docs/](docs/)
+- [Project Requirements Document (PRD)](docs/PRD.md)
 
 ---
 
