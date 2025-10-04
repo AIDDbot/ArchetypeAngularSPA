@@ -13,5 +13,6 @@ export class UserStore {
 
   public logout() {
     this.globalStore.changeUser(undefined);
+    this.globalStore.changeToken(undefined);
   }
 }

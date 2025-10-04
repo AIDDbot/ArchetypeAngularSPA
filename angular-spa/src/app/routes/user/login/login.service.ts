@@ -19,7 +19,7 @@ export class LoginStoreService {
     const userToken = this.userToken();
     if (!userToken) return;
     this.globalStore.changeToken(userToken.token);
-    this.globalStore.changeUser(userToken.user);
+    this.globalStore.changeUser(userToken.user.email);
   });
 
   public error: Signal<string | undefined> = this.loginError.asReadonly();

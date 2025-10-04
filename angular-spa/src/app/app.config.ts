@@ -12,7 +12,6 @@ import { routes } from "./app.routes";
 import { authInterceptor } from "./core/auth.interceptor";
 import { cacheInterceptor } from "./core/cache.interceptor";
 import { logFakeInterceptor } from "./core/log-fake.interceptor";
-import { usersFakeInterceptor } from "./core/users-fake.interceptor";
 import { provideEnv, withData } from "./shared/env/env.token";
 import { GlobalStore } from "./shared/global/global.store";
 import { LogService } from "./shared/log/log.service";
@@ -24,8 +23,8 @@ export const appConfig: ApplicationConfig = {
         environment.APP_NAME,
         environment.APP_VERSION,
         environment.APP_REPOSITORY,
-        environment.APP_AUTHOR,
-      ),
+        environment.APP_AUTHOR
+      )
     ),
     provideAppInitializer(async () => {
       const globalStore = inject(GlobalStore);
@@ -38,9 +37,9 @@ export const appConfig: ApplicationConfig = {
       withInterceptors([
         authInterceptor,
         cacheInterceptor,
-        usersFakeInterceptor,
+        //usersFakeInterceptor,
         logFakeInterceptor,
-      ]),
+      ])
     ),
   ],
 };

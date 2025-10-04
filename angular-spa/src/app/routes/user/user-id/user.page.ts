@@ -19,6 +19,7 @@ import { UserStore } from "./user.store";
   `,
 })
 export default class UserPage {
+  //http://localhost:4200/user;id=89.1;name=alb;email=a@b.c
   public userId = input<string>();
   private userStore = inject(UserStore);
   private router = inject(Router);

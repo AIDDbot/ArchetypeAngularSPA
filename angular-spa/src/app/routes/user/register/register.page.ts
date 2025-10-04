@@ -30,7 +30,7 @@ export default class RegisterPage {
   private onUserTokenEffect = effect(() => {
     const userToken = this.userToken();
     if (userToken) {
-      this.router.navigate(["/", "user", userToken.user]);
+      this.router.navigate(["/", "user", userToken.user.email]);
     }
   });
 
