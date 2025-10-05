@@ -22,9 +22,9 @@ Archetype for AI tools to create SPA web applications using Angular:
   - Home with ip information
 
 
-Based on the [AIDDbot](https://github.com/AIcodeAcademy/AIDDbot) project.
+Based on the [AIDDbot](https://github.com/AIDDbot/AIDDbot) project.
 
-Repository: [AI code Academy / archetype angular spa](https://github.com/AIcodeAcademy/ArchetypeAngularSPA)
+Repository: [AI code Academy / archetype angular spa](https://github.com/AIDDbot/ArchetypeAngularSPA)
 
 AI chat modes, prompts and instructions (For github copilot): [.github](.github/)
 
